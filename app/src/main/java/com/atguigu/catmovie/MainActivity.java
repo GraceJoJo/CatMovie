@@ -36,7 +36,7 @@ public class MainActivity extends FragmentActivity {
     private MeFragment meFragment;
     private FragmentTransaction transaction;
     private int position;
-
+    //测试git
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
