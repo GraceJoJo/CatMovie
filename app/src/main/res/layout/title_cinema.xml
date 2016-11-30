@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#D43137">
+
+    <RelativeLayout
+        android:id="@+id/select_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:background="@drawable/title_bgcolor_selector">
+
+        <TextView
+            android:id="@+id/tv_select_city"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="北京"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/tv_select_city"
+            android:src="@drawable/show_city01" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:text="影院"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/cinema_select"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/cinema_search"
+        android:src="@drawable/select" />
+
+    <ImageView
+        android:id="@+id/cinema_search"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/search" />
+</RelativeLayout>

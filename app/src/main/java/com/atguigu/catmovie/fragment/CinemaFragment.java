@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.movie;
+package com.atguigu.catmovie.fragment;
 
 import android.graphics.Color;
 import android.util.Log;

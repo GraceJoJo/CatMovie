@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.movie;
+package com.atguigu.catmovie.fragment;
 
 import android.graphics.Color;
 import android.view.Gravity;
@@ -11,7 +11,7 @@ import com.atguigu.catmovie.utils.DensityUtil;
 /**
  * Created by Administrator on 2016/11/30.
  */
-public class MovieFragment extends BaseFragment {
+public class FindFragment extends BaseFragment {
     private TextView textView;
     @Override
     public View initView() {
@@ -24,6 +24,7 @@ public class MovieFragment extends BaseFragment {
     }
     @Override
     public void initData() {
-        textView.setText("电影");
+        textView.setText("发现");
     }
+
 }

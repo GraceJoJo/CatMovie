@@ -7,10 +7,10 @@ import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.atguigu.catmovie.movie.CinemaFragment;
-import com.atguigu.catmovie.movie.FindFragment;
-import com.atguigu.catmovie.movie.MeFragment;
-import com.atguigu.catmovie.movie.MovieFragment;
+import com.atguigu.catmovie.fragment.CinemaFragment;
+import com.atguigu.catmovie.fragment.FindFragment;
+import com.atguigu.catmovie.fragment.MeFragment;
+import com.atguigu.catmovie.fragment.MovieFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
