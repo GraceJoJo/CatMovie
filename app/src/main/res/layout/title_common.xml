@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="#D43137">
@@ -8,16 +9,17 @@
         android:id="@+id/rl_select_city"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:background="@drawable/title_bgcolor_selector"
         android:clickable="true"
-        android:background="@drawable/title_bgcolor_selector">
+        android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/tv_select_city"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="北京"
             android:paddingLeft="3dp"
+            android:text="北京"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
@@ -27,42 +29,79 @@
             android:layout_toRightOf="@+id/tv_select_city"
             android:src="@drawable/show_city01" />
     </RelativeLayout>
-        <TextView
-            android:layout_weight="1"
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="影院"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="#D43137"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/tl_10"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:text="影院"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:layout_height="32dp"
+            android:background="@drawable/flyco_tab_bg_shape"
+            android:padding="1dp"
+            tl:tl_indicator_color="#FFFFFF"
+            tl:tl_indicator_corner_radius="5dp"
+            tl:tl_indicator_margin_bottom="0.3dp"
+            tl:tl_indicator_margin_top="0.3dp"
+            tl:tl_indicator_style="BLOCK"
+            tl:tl_textSelectColor="@android:color/holo_red_light"
+            tl:tl_textUnselectColor="@android:color/white" />
+        <!--android:background="#B61F1B"-->
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_cinema_select"
         android:layout_width="40dp"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:background="@drawable/title_bgcolor_selector"
         android:clickable="true"
-        android:background="@drawable/title_bgcolor_selector">
+        android:gravity="center">
+
         <ImageView
+            android:id="@+id/iv_select_city"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginRight="10dp"
             android:clickable="false"
-            android:src="@drawable/select" />
+            android:src="@drawable/select"
+            android:visibility="gone" />
     </LinearLayout>
+
     <LinearLayout
-        android:clickable="true"
         android:id="@+id/ll_cinema_search"
         android:layout_width="40dp"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="@drawable/title_bgcolor_selector">
+        android:background="@drawable/title_bgcolor_selector"
+        android:clickable="true"
+        android:gravity="center">
+
         <ImageView
+            android:id="@+id/iv_search_icon"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:clickable="false"
             android:layout_marginRight="10dp"
-            android:src="@drawable/search" />
+            android:clickable="false"
+            android:src="@drawable/search"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>
