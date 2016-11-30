@@ -1,29 +1,86 @@
 package com.atguigu.catmovie.fragment;
 
-import android.graphics.Color;
-import android.view.Gravity;
+import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseFragment;
-import com.atguigu.catmovie.utils.DensityUtil;
+import com.atguigu.catmovie.login.LoginActivity;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2016/11/30.
+ * 我的--页面
  */
-public class MeFragment  extends BaseFragment{
-    private TextView textView;
+public class MeFragment extends BaseFragment implements View.OnClickListener {
+
+    @Bind(R.id.iv_user_icon)
+    ImageView ivUserIcon;
+    @Bind(R.id.tv_login_now)
+    TextView tvLoginNow;
+    @Bind(R.id.rl_my_ordered)
+    RelativeLayout rlMyOrdered;
+    @Bind(R.id.ll_no_resume)
+    LinearLayout llNoResume;
+    @Bind(R.id.ll_wait_for_pay)
+    LinearLayout llWaitForPay;
+    @Bind(R.id.ll_wait_comment)
+    LinearLayout llWaitComment;
+    @Bind(R.id.ll_refund)
+    LinearLayout llRefund;
+    @Bind(R.id.rl_my_message)
+    RelativeLayout rlMyMessage;
+    @Bind(R.id.rl_collection)
+    RelativeLayout rlCollection;
+    @Bind(R.id.rl_achievement)
+    RelativeLayout rlAchievement;
+    @Bind(R.id.rl_meituan_wallet)
+    RelativeLayout rlMeituanWallet;
+    @Bind(R.id.next)
+    ImageView next;
+    @Bind(R.id.rl_my_balance)
+    RelativeLayout rlMyBalance;
+    @Bind(R.id.rl_my_coupon)
+    RelativeLayout rlMyCoupon;
+    @Bind(R.id.rl_shopping_mall)
+    RelativeLayout rlShoppingMall;
+    @Bind(R.id.rl_settings)
+    RelativeLayout rlSettings;
+
     @Override
     public View initView() {
-//        View.inflate(mContext, R.layout.fragment_me,null);
-        textView = new TextView(mContext);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(Color.RED);
-        textView.setTextSize(DensityUtil.dip2px(mContext, 40));
-        return textView;
+        View view = View.inflate(mContext, R.layout.fragment_me, null);
+        ButterKnife.bind(this, view);
+        return view;
     }
+
     @Override
     public void initData() {
-        textView.setText("我的");
+        initListener();
+    }
+
+    private void initListener() {
+        tvLoginNow.setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_login_now:
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

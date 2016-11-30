@@ -2,8 +2,11 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_grey_light">#11000000</color>
     <color name="colorAccent">#FF4081</color>
     <color name="title_bg_pressed">#9f3f43</color>
     <color name="title_bg_unpressed">#D43137</color>
+    <color name="color_black_light">#403d3d</color>
     <!--<color name="title_bg_common">#D43137"</color>-->
 </resources>
