@@ -1,5 +1,4 @@
 package com.atguigu.catmovie.login;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -19,6 +18,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
 
 public class LoginActivity extends FragmentActivity {
 
@@ -64,7 +64,7 @@ public class LoginActivity extends FragmentActivity {
         fragments.add(loginByPhoneFragment);
     }
 
-    class LoginPagerAdapter extends FragmentPagerAdapter{
+    class LoginPagerAdapter extends FragmentPagerAdapter {
 
         public LoginPagerAdapter(FragmentManager fm) {
             super(fm);

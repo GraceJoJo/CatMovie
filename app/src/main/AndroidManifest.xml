@@ -18,6 +18,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".login.LoginActivity" android:theme="@style/StyledIndicators" ></activity>
         <!--android:theme="@style/Theme.PageIndicatorDefaults"-->
+        <!--android:theme="@style/Theme.PageIndicatorDefaults"-->
+        <!--android:theme="@style/StyledIndicators"-->
     </application>
 
 </manifest>
