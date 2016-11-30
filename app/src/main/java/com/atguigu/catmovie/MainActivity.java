@@ -7,13 +7,10 @@ import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.atguigu.catmovie.base.BaseFragment;
 import com.atguigu.catmovie.movie.CinemaFragment;
 import com.atguigu.catmovie.movie.FindFragment;
 import com.atguigu.catmovie.movie.MeFragment;
 import com.atguigu.catmovie.movie.MovieFragment;
-
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,7 +29,6 @@ public class MainActivity extends FragmentActivity {
     RadioButton rbMe;
     @Bind(R.id.rg_main)
     RadioGroup rgMain;
-    private ArrayList<BaseFragment> fragments;
     private MovieFragment movieFragment;
     private CinemaFragment cinemaFragment;
 
@@ -46,24 +42,10 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-//        initFragment();
         initListener();
         rgMain.check(R.id.rb_movie);
 
     }
-
-//    private void initFragment() {
-//        fragments = new ArrayList<>();
-//        movieFragment = new MovieFragment();
-//        cinemaFragment = new CinemaFragment();
-//        findFragment = new FindFragment();
-//        meFragment = new MeFragment();
-//
-//        fragments.add(movieFragment);
-//        fragments.add(cinemaFragment);
-//        fragments.add(findFragment);
-//        fragments.add(meFragment);
-//    }
 
     private void initListener() {
 
@@ -144,4 +126,5 @@ public class MainActivity extends FragmentActivity {
             }
 
     }
+
 }
