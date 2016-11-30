@@ -1,16 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.atguigu.catmovie.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/fl_main_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginBottom="3dp"></View>
+
+    <RadioGroup
+        android:id="@+id/rg_main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="cat!" />
-</RelativeLayout>
+        android:background="#F5F5F5"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_movie"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingTop="5dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@android:color/transparent"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/rb_movie_selector"
+            android:gravity="center"
+            android:text="电影"
+            android:textSize="10sp"
+            android:textColor="@drawable/rb_text_color_selector" />
+
+        <RadioButton
+            android:id="@+id/rb_cinema"
+            android:layout_width="0dp"
+            android:paddingTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@android:color/transparent"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/rb_cinema_selector"
+            android:gravity="center"
+            android:text="影院"
+            android:textSize="10sp"
+            android:textColor="@drawable/rb_text_color_selector" />
+
+        <RadioButton
+            android:id="@+id/rb_find"
+            android:layout_width="0dp"
+            android:paddingTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:background="@android:color/transparent"
+            android:button="@android:color/transparent"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/rb_find_selector"
+            android:gravity="center"
+            android:text="发现"
+            android:textColor="@drawable/rb_text_color_selector" />
+
+        <RadioButton
+            android:id="@+id/rb_me"
+            android:paddingTop="5dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:background="@android:color/transparent"
+            android:button="@android:color/transparent"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/rb_me_selector"
+            android:gravity="center"
+            android:text="我的"
+            android:textColor="@drawable/rb_text_color_selector" />
+
+    </RadioGroup>
+</LinearLayout>
