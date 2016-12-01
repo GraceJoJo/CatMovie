@@ -22,6 +22,7 @@
             android:textColor="@android:color/darker_gray"
             android:layout_marginBottom="15dp"/>
         <TextView
+            android:id="@+id/click_refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/click_refresh_shape"

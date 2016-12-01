@@ -125,7 +125,7 @@ public class HotPlayBean {
             private int pn;
             private int preSale;
             private String rt;
-            private int sc;
+            private Float sc;
             private String scm;
             private String showDate;
             private String showInfo;
@@ -242,11 +242,11 @@ public class HotPlayBean {
                 this.rt = rt;
             }
 
-            public int getSc() {
+            public Float getSc() {
                 return sc;
             }
 
-            public void setSc(int sc) {
+            public void setSc(Float sc) {
                 this.sc = sc;
             }
 

@@ -75,7 +75,7 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
 
         tabLayout_10.setViewPager(vp);
         //设置默认选中第四个位置
-        vp.setCurrentItem(1);
+        vp.setCurrentItem(0);
     }
     @Override
     public void onTabSelect(int position) {
