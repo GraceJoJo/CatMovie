@@ -76,7 +76,6 @@ public class HotPlayFragment extends BaseFragment implements View.OnClickListene
 
         getDataFromServer();
 
-        setRefresh();
 
         initLister();
     }
@@ -141,6 +140,7 @@ public class HotPlayFragment extends BaseFragment implements View.OnClickListene
                         switch (id) {
                             case 100:
                                 if (response != null) {
+                                    setRefresh();
                                     rl_loading_common.setVisibility(View.GONE);
                                     Log.e("TAG", "联网成功");
                                     processImageJson(response);
@@ -229,6 +229,8 @@ public class HotPlayFragment extends BaseFragment implements View.OnClickListene
             case R.id.click_refresh :
                 //错误页面的点击重新刷新请求网络
                 getDataFromServer();
+                rl_error_common.setVisibility(View.GONE);
+                rl_loading_common.setVisibility(View.VISIBLE);
                 break;
         }
     }
