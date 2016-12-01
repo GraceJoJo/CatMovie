@@ -15,7 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar" android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".login.LoginActivity" android:theme="@style/StyledIndicators" ></activity>
         <!--android:theme="@style/Theme.PageIndicatorDefaults"-->
         <!--android:theme="@style/Theme.PageIndicatorDefaults"-->
