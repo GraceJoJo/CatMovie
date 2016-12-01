@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/white">
-    <ListView
-        android:id="@+id/listview_hot"
-        android:divider="@null"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <com.cjj.MaterialRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"
+        app:overlay="false"
+        app:progress_backgroud_color="#FFFAFAFA"
+        app:progress_colors="@array/material_colors"
+        app:progress_show_arrow="true"
+        app:progress_show_circle_backgroud="true"
+        app:wave_color="#FFFFFF"
+        app:wave_height_type="normal"
+        app:wave_show="true">
+
+        <ListView
+            android:id="@+id/listview_hot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"></ListView>
+    </com.cjj.MaterialRefreshLayout>
     <!-- 联网请求的页面-->
     <include layout="@layout/loading_layout"></include>
+
     <include layout="@layout/error_layout"></include>
 </LinearLayout>

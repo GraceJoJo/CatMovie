@@ -31,5 +31,5 @@ dependencies {
     compile files('libs/picasso-2.5.2.jar')
     compile files('libs/gson-2.1.jar')
     compile project(':okhttputils')
-    compile project(':SpringView_refresh_library')
+    compile project(':MaterialRefreshLayout_library')
 }

@@ -19,6 +19,8 @@ import com.atguigu.catmovie.movie.bean.HotPlayBean;
 import com.atguigu.catmovie.net.CallBack;
 import com.atguigu.catmovie.net.RequestNet;
 import com.atguigu.catmovie.utils.ConstantsUtils;
+import com.cjj.MaterialRefreshLayout;
+import com.cjj.MaterialRefreshListener;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
@@ -44,6 +46,7 @@ public class HotPlayFragment extends BaseFragment implements View.OnClickListene
     private List<String> imageurls = new ArrayList<>();
     private List<HotPlayBean.DataBean.MoviesBean> movieList;
     private TextView click_refresh;
+    private MaterialRefreshLayout materialRefreshLayout;
 
     @Override
     public View initView() {
@@ -53,7 +56,8 @@ public class HotPlayFragment extends BaseFragment implements View.OnClickListene
         listviewHot = (ListView) view.findViewById(R.id.listview_hot);
         rl_loading_common = (RelativeLayout) view.findViewById(R.id.rl_loading_common);//加载的页面
         rl_error_common = (RelativeLayout) view.findViewById(R.id.rl_error_common);//出错页面
-        click_refresh = (TextView) view.findViewById(R.id.click_refresh);
+        click_refresh = (TextView) view.findViewById(R.id.click_refresh);//点击刷新
+        materialRefreshLayout = (MaterialRefreshLayout)view.findViewById(R.id.refresh);
         //初始化头布局--控件
         ll_search_center = (LinearLayout) headView.findViewById(R.id.ll_search_center);
         banner = (Banner) headView.findViewById(R.id.banner);
@@ -64,14 +68,42 @@ public class HotPlayFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void initData() {
+
         listviewHot.setVisibility(View.GONE);
         rl_loading_common.setVisibility(View.VISIBLE);
         rl_error_common.setVisibility(View.GONE);
-
+        materialRefreshLayout.setVisibility(View.GONE);
 
         getDataFromServer();
 
+        setRefresh();
+
         initLister();
+    }
+
+    private void setRefresh() {
+        materialRefreshLayout.setVisibility(View.VISIBLE);
+        materialRefreshLayout.setSunStyle(true);
+        materialRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
+            @Override
+            public void onRefresh(final MaterialRefreshLayout materialRefreshLayout) {
+                materialRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        materialRefreshLayout.finishRefresh();
+//                        getDataFromNet();
+                    }
+                }, 3000);
+
+            }
+
+            @Override
+            public void onfinish() {
+                Toast.makeText(mContext, "finish", Toast.LENGTH_LONG).show();
+            }
+
+
+        });
     }
 
     /**
