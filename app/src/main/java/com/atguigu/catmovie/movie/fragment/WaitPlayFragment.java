@@ -10,13 +10,14 @@ import android.widget.Toast;
 import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseFragment;
 import com.atguigu.catmovie.movie.adapter.StickyExampleAdapter;
+import com.atguigu.catmovie.movie.adapter.StickyExampleModel;
 import com.atguigu.catmovie.movie.bean.WaitPlayBean;
 import com.atguigu.catmovie.net.CallBack;
 import com.atguigu.catmovie.net.RequestNet;
 import com.atguigu.catmovie.utils.ConstantsUtils;
-import com.atguigu.catmovie.utils.DataUtil;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,8 +25,10 @@ import java.util.List;
  */
 public class WaitPlayFragment extends BaseFragment {
 
-    private TextView textView;
     private View view;
+    private TextView tv_headview;
+    private RecyclerView recycleview;
+    private List<WaitPlayBean.DataBean.ComingBean> comingList;
 
     @Override
     public View initView() {
@@ -41,14 +44,13 @@ public class WaitPlayFragment extends BaseFragment {
         getDataFromNet();
     }
     private void initRecyclerView() {
-        RecyclerView recycleview = (RecyclerView)view.findViewById(R.id.recycleview);
-        final TextView tv_headview = (TextView)view.findViewById(R.id.tv_headview);
+        recycleview = (RecyclerView)view.findViewById(R.id.recycleview);
+        tv_headview = (TextView)view.findViewById(R.id.tv_headview);
 
         assert recycleview != null;
         assert tv_headview != null;
 
-        recycleview.setLayoutManager(new LinearLayoutManager(mContext));
-        recycleview.setAdapter(new StickyExampleAdapter(mContext, DataUtil.getData()));
+
         recycleview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -92,6 +94,7 @@ public class WaitPlayFragment extends BaseFragment {
 //                        rl_error_common.setVisibility(View.VISIBLE);
 //                        rl_loading_common.setVisibility(View.GONE);
                     }
+
                     @Override
                     public void onSuccess(String response, int id) {
                         switch (id) {
@@ -99,8 +102,10 @@ public class WaitPlayFragment extends BaseFragment {
                                 if (response != null) {
 //                                    rl_loading_common.setVisibility(View.GONE);
                                     Log.e("WAIT", "待映页面--联网成功");
-                                    Log.e("TAG", "待映页面--Json=="+response);
+                                    Log.e("TAG", "待映页面--Json==" + response);
                                     processJson(response);
+                                    recycleview.setLayoutManager(new LinearLayoutManager(mContext));
+                                    recycleview.setAdapter(new StickyExampleAdapter(mContext, getData(), comingList));
                                 }
                                 break;
                             case 101:
@@ -109,11 +114,35 @@ public class WaitPlayFragment extends BaseFragment {
                     }
                 });
     }
+    public List<StickyExampleModel> getData() {
+        List<StickyExampleModel> stickyExampleModels = new ArrayList<>();
+        String constantsUrl = "http://p0.meituan.net/165.220/movie/f2820b28cff46c530a1aee47a2c00011274783.jpg";
+        for (int index = 0; index < 30; index++) {
+            if (index == 0) {
+                stickyExampleModels.add(new StickyExampleModel("预告片推荐","电影"+index,000,"","",constantsUrl));
+            } else if (index == 1) {
+                stickyExampleModels.add(new StickyExampleModel("近期最受期待","电影"+index,111,"","",constantsUrl));
+            } else if (index < comingList.size()+2) {
+                //设置一个死的图片路径
+
+                WaitPlayBean.DataBean.ComingBean comingBean = comingList.get(index - 2);
+                Log.e("TAG", "imageUrls=="+comingBean.getImg());
+                stickyExampleModels.add(new StickyExampleModel("12月2日 周五",comingBean .getNm(),
+                        comingBean.getWish(),comingBean.getDesc(),comingBean.getStar(),constantsUrl));
+            }
+//      else
+//          stickyExampleModels.add(new StickyExampleModel(
+//                  "吸顶文本4", "name" + index, "gender" + index, "profession" + index));
+//      }
+        }
+
+        return stickyExampleModels;
+    }
 
     private void processJson(String json) {
         Gson gson = new Gson();
         WaitPlayBean waitPlayBean = gson.fromJson(json, WaitPlayBean.class);
-        List<WaitPlayBean.DataBean.ComingBean> comingList = waitPlayBean.getData().getComing();
-        Log.e("WAIT", "comingList==="+comingList.size());
+        comingList = waitPlayBean.getData().getComing();
+        Log.e("WAIT", "comingList===" + comingList.size());
     }
 }
