@@ -47,7 +47,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/movie_type"
+                    android:id="@+id/movie_type_3d"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -57,6 +57,20 @@
                     android:paddingLeft="3dp"
                     android:paddingRight="3dp"
                     android:text="3D"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/movie_type_2d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/movie_name"
+                    android:background="@drawable/bg_movietype_shape"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="2D"
                     android:textColor="@android:color/white"
                     android:textSize="10sp" />
             </RelativeLayout>
@@ -79,7 +93,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/buy_ticket"
+            android:id="@+id/yushou"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -90,9 +104,24 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="2dp"
+            android:text="预售"
+            android:textSize="12sp"
+            android:textColor="#5375ab" />
+        <TextView
+            android:id="@+id/buy_ticket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/buy_shape"
+            android:paddingBottom="2dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp"
             android:text="购票"
             android:textSize="12sp"
-            android:textColor="#ef6d6d" />
+            android:textColor="@color/color_red_light2" />
     </RelativeLayout>
 
     <View

@@ -60,8 +60,33 @@ public class HotPlayFragmentAdapter extends BaseAdapter {
         holder.movieName.setText(moviesBean.getNm());
         holder.movieDesc.setText(moviesBean.getScm());
         holder.moviePlayInfo.setText(moviesBean.getShowInfo());
-
+        //判断是预售还是购票
+        isPreSale(holder, moviesBean);
+        //判断是否是3D
+        is3D(holder, moviesBean);
         return convertView;
+    }
+
+    private void is3D(ViewHolder holder, HotPlayBean.DataBean.MoviesBean moviesBean) {
+        boolean is3D = moviesBean.isValue3d();
+        if(is3D) {
+            holder.movie_type_3d.setVisibility(View.VISIBLE);
+            holder.movie_type_2d.setVisibility(View.GONE);
+        }else {
+            holder.movie_type_3d.setVisibility(View.GONE);
+            holder.movie_type_2d.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void isPreSale(ViewHolder holder, HotPlayBean.DataBean.MoviesBean moviesBean) {
+        int preSale = moviesBean.getPreSale();//0-购票  1--预售
+        if(preSale==0) {
+            holder.yushou.setVisibility(View.GONE);
+            holder.buyTicket.setVisibility(View.VISIBLE);
+        }else {
+            holder.yushou.setVisibility(View.VISIBLE);
+            holder.buyTicket.setVisibility(View.GONE);
+        }
     }
 
     static class ViewHolder {
@@ -69,14 +94,18 @@ public class HotPlayFragmentAdapter extends BaseAdapter {
         ImageView ivMovieIcon;
         @Bind(R.id.movie_name)
         TextView movieName;
-        @Bind(R.id.movie_type)
-        TextView movieType;
+        @Bind(R.id.movie_type_3d)
+        TextView movie_type_3d;
+        @Bind(R.id.movie_type_2d)
+        TextView movie_type_2d;
         @Bind(R.id.movie_desc)
         TextView movieDesc;
         @Bind(R.id.movie_play_info)
         TextView moviePlayInfo;
         @Bind(R.id.buy_ticket)
         TextView buyTicket;
+        @Bind(R.id.yushou)
+        TextView yushou;
         @Bind(R.id.rl_item)
         RelativeLayout rlItem;
 
