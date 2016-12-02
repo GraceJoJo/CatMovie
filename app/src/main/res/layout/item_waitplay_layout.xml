@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_content_wrapper"
     android:layout_width="match_parent"
-    android:layout_height="95dp"
-    android:orientation="vertical"
-    android:id="@+id/rl_content_wrapper">
+    android:layout_height="110dp"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <ImageView
             android:id="@+id/iv_movie_icon"
             android:layout_width="65dp"
             android:layout_height="110dp"
             android:layout_centerVertical="true"
-            android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
-            android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="3dp"
             android:gravity="center"
             android:src="@android:mipmap/sym_def_app_icon" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/play_movie_pic"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="27dp"/>
+            android:layout_marginLeft="27dp"
+            android:src="@drawable/play_movie_pic" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,28 +65,45 @@
                     android:textSize="10sp" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_wish"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:textSize="13sp"
-                android:text="君行千里" />
+                android:layout_height="20dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/tv_wish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="230000"
+                    android:textColor="#d6921c"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_wish"
+                    android:text="人想看"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/movie_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:textSize="13sp"
-                android:text="神奇动物城，法师超显能" />
+                android:text="神奇动物城，法师超显能"
+                android:layout_marginBottom="2dp"
+                android:textSize="13sp" />
 
 
             <TextView
-                android:textSize="13sp"
                 android:id="@+id/tv_star_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="今天162家影院放映2030场" />
+                android:text="今天162家影院放映2030场"
+                android:textSize="13sp" />
 
         </LinearLayout>
 
@@ -99,14 +119,27 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="2dp"
-            android:text="购票"
-            android:textSize="12sp"
-            android:textColor="#ef6d6d" />
+            android:text="预售"
+            android:textColor="#5375ab"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/xiang_kan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/xihuan_xin_shape"
+            android:drawableLeft="@drawable/xihuan_xin"
+            android:drawablePadding="2dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp"
+            android:text="想看"
+            android:textColor="#ef6d6d"
+            android:textSize="12sp" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_alignParentBottom="true"
-        android:background="#c7c5c5"></View>
 </RelativeLayout>

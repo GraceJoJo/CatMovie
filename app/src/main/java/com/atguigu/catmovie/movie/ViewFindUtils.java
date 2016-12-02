@@ -4,6 +4,7 @@ import android.util.SparseArray;
 import android.view.View;
 
 @SuppressWarnings({ "unchecked" })
+//集成tabIndicator效果
 public class ViewFindUtils
 {
 	/**

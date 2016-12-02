@@ -4,9 +4,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorAccent"
-    android:padding="10dp"
-    android:textColor="@android:color/white"
-    android:textSize="14sp"
+    android:layout_height="30dp"
+    android:background="#F5F5F5"
+    android:gravity="center|start"
+    android:paddingLeft="5dp"
+    android:textColor="@android:color/black"
+    android:textSize="12sp"
     tools:text="吸顶文本" />
+    <!--android:background="#f1eeee"-->

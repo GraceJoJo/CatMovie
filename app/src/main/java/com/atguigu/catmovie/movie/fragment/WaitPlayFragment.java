@@ -4,27 +4,49 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseFragment;
 import com.atguigu.catmovie.movie.adapter.StickyExampleAdapter;
-import com.atguigu.catmovie.movie.adapter.StickyExampleModel;
+import com.atguigu.catmovie.movie.bean.StickyExampleBean;
 import com.atguigu.catmovie.movie.bean.WaitPlayBean;
 import com.atguigu.catmovie.net.CallBack;
 import com.atguigu.catmovie.net.RequestNet;
 import com.atguigu.catmovie.utils.ConstantsUtils;
+import com.atguigu.catmovie.movie.utils.StringUitls;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * 电影--待映--页面
  */
-public class WaitPlayFragment extends BaseFragment {
+public class WaitPlayFragment extends BaseFragment implements View.OnClickListener {
 
+    @Bind(R.id.et_search_center)
+    EditText etSearchCenter;
+    @Bind(R.id.ll_search_center)
+    LinearLayout llSearchCenter;
+    @Bind(R.id.tv_headview)
+    TextView tvHeadview;
+    @Bind(R.id.fl_movie_waitplay)
+    FrameLayout flMovieWaitplay;
+    @Bind(R.id.click_refresh)
+    TextView clickRefresh;
+    @Bind(R.id.rl_error_common)
+    RelativeLayout rlErrorCommon;
+    @Bind(R.id.rl_loading_common)
+    RelativeLayout rlLoadingCommon;
     private View view;
     private TextView tv_headview;
     private RecyclerView recycleview;
@@ -33,19 +55,28 @@ public class WaitPlayFragment extends BaseFragment {
     @Override
     public View initView() {
         view = View.inflate(mContext, R.layout.fragment_movie_waitplay, null);
+        ButterKnife.bind(this, view);
         initRecyclerView();
         return view;
     }
+
     @Override
     public void initData() {
 
-//        rl_loading_common.setVisibility(View.VISIBLE);
-//        rl_error_common.setVisibility(View.GONE);
+        rlLoadingCommon.setVisibility(View.VISIBLE);
+        rlErrorCommon.setVisibility(View.GONE);
         getDataFromNet();
+
+        initListener();
     }
+
+    private void initListener() {
+        clickRefresh.setOnClickListener(this);
+    }
+
     private void initRecyclerView() {
-        recycleview = (RecyclerView)view.findViewById(R.id.recycleview);
-        tv_headview = (TextView)view.findViewById(R.id.tv_headview);
+        recycleview = (RecyclerView) view.findViewById(R.id.recycleview);
+        tv_headview = (TextView) view.findViewById(R.id.tv_headview);
 
         assert recycleview != null;
         assert tv_headview != null;
@@ -91,8 +122,8 @@ public class WaitPlayFragment extends BaseFragment {
                     @Override
                     public void onError(Exception e) {
                         Toast.makeText(getActivity(), "亲,没网了", Toast.LENGTH_SHORT).show();
-//                        rl_error_common.setVisibility(View.VISIBLE);
-//                        rl_loading_common.setVisibility(View.GONE);
+                        rlErrorCommon.setVisibility(View.VISIBLE);
+                        rlLoadingCommon.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -100,7 +131,7 @@ public class WaitPlayFragment extends BaseFragment {
                         switch (id) {
                             case 100:
                                 if (response != null) {
-//                                    rl_loading_common.setVisibility(View.GONE);
+                                    rlLoadingCommon.setVisibility(View.GONE);
                                     Log.e("WAIT", "待映页面--联网成功");
                                     Log.e("TAG", "待映页面--Json==" + response);
                                     processJson(response);
@@ -114,29 +145,30 @@ public class WaitPlayFragment extends BaseFragment {
                     }
                 });
     }
-    public List<StickyExampleModel> getData() {
-        List<StickyExampleModel> stickyExampleModels = new ArrayList<>();
+
+    public List<StickyExampleBean> getData() {
+        List<StickyExampleBean> stickyExampleBeans = new ArrayList<>();
         String constantsUrl = "http://p0.meituan.net/165.220/movie/f2820b28cff46c530a1aee47a2c00011274783.jpg";
         for (int index = 0; index < 30; index++) {
             if (index == 0) {
-                stickyExampleModels.add(new StickyExampleModel("预告片推荐","电影"+index,000,"","",constantsUrl));
+                stickyExampleBeans.add(new StickyExampleBean("预告片推荐", "电影" + index, "000", "", "", constantsUrl,false));
             } else if (index == 1) {
-                stickyExampleModels.add(new StickyExampleModel("近期最受期待","电影"+index,111,"","",constantsUrl));
-            } else if (index < comingList.size()+2) {
+                stickyExampleBeans.add(new StickyExampleBean("近期最受期待", "电影" + index, "000", "", "", constantsUrl,false));
+            } else if (index < comingList.size() + 2) {
                 //设置一个死的图片路径
 
                 WaitPlayBean.DataBean.ComingBean comingBean = comingList.get(index - 2);
-                Log.e("TAG", "imageUrls=="+comingBean.getImg());
-                stickyExampleModels.add(new StickyExampleModel("12月2日 周五",comingBean .getNm(),
-                        comingBean.getWish(),comingBean.getDesc(),comingBean.getStar(),constantsUrl));
+//                Log.e("TAG", "imageUrls==" + comingBean.getImg());
+                stickyExampleBeans.add(new StickyExampleBean(comingBean.getComingTitle(), comingBean.getNm(),
+                        comingBean.getWish() + "", comingBean.getDesc(), comingBean.getStar(), StringUitls.parseImageUrl(comingBean.getImg()), comingBean.isPreShow()));
             }
 //      else
-//          stickyExampleModels.add(new StickyExampleModel(
+//          stickyExampleBeans.add(new StickyExampleBean(
 //                  "吸顶文本4", "name" + index, "gender" + index, "profession" + index));
 //      }
         }
 
-        return stickyExampleModels;
+        return stickyExampleBeans;
     }
 
     private void processJson(String json) {
@@ -144,5 +176,23 @@ public class WaitPlayFragment extends BaseFragment {
         WaitPlayBean waitPlayBean = gson.fromJson(json, WaitPlayBean.class);
         comingList = waitPlayBean.getData().getComing();
         Log.e("WAIT", "comingList===" + comingList.size());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.click_refresh :
+                getDataFromNet();
+                rlErrorCommon.setVisibility(View.GONE);
+                rlLoadingCommon.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "刷新", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }
