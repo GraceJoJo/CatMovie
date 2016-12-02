@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.atguigu.catmovie"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -15,6 +15,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
         }
     }
 }
@@ -33,4 +39,6 @@ dependencies {
     compile project(':okhttputils')
     compile project(':MaterialRefreshLayout_library')
     compile 'com.android.support:design:24.2.1'
+    compile files('libs/BaiduLBS_Android.jar')
+    compile project(':pinyinSearch')
 }
