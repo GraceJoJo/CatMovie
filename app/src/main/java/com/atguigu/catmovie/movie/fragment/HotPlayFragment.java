@@ -100,8 +100,6 @@ public class HotPlayFragment extends BaseFragment implements View.OnClickListene
             public void onfinish() {
                 Toast.makeText(mContext, "finish", Toast.LENGTH_LONG).show();
             }
-
-
         });
     }
 

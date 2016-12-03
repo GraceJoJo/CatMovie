@@ -11,8 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.Scroller;
 
-import com.atguigu.catmovie.MyApplication;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -27,6 +25,7 @@ import java.util.Queue;
  */
 public class HorizontalListView extends AdapterView<ListAdapter> {
 
+    private Context context;
     public boolean mAlwaysOverrideTouch = true;
     protected ListAdapter mAdapter;
     private int mLeftViewIndex = -1;
@@ -43,8 +42,10 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
     private OnItemLongClickListener mOnItemLongClicked;
     private boolean mDataChanged = false;
 
+
     public HorizontalListView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         initView();
     }
 
@@ -56,12 +57,11 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
         mNextX = 0;
         mMaxX = Integer.MAX_VALUE;
         mScroller = new Scroller(getContext());
-        mGesture = new GestureDetector(MyApplication.getmContext(), mOnGesture);
+        mGesture = new GestureDetector(context, mOnGesture);
     }
 
     @Override
-    public void setOnItemSelectedListener(
-            AdapterView.OnItemSelectedListener listener) {
+    public void setOnItemSelectedListener(AdapterView.OnItemSelectedListener listener) {
         mOnItemSelected = listener;
     }
 
@@ -71,8 +71,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
     }
 
     @Override
-    public void setOnItemLongClickListener(
-            AdapterView.OnItemLongClickListener listener) {
+    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
         mOnItemLongClicked = listener;
     }
 
@@ -103,7 +102,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
 
     @Override
     public View getSelectedView() {
-        // TODO: implement
+        //TODO: implement
         return null;
     }
 
@@ -125,25 +124,23 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
 
     @Override
     public void setSelection(int position) {
-        // TODO: implement
+        //TODO: implement
     }
 
     private void addAndMeasureChild(final View child, int viewPos) {
         LayoutParams params = child.getLayoutParams();
         if (params == null) {
-            params = new LayoutParams(LayoutParams.FILL_PARENT,
-                    LayoutParams.FILL_PARENT);
+            params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
         }
 
         addViewInLayout(child, viewPos, params, true);
-        child.measure(
-                MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.AT_MOST),
+        child.measure(MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.AT_MOST),
                 MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.AT_MOST));
     }
 
+
     @Override
-    protected synchronized void onLayout(boolean changed, int left, int top,
-                                         int right, int bottom) {
+    protected synchronized void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
         if (mAdapter == null) {
@@ -206,14 +203,13 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
         }
         fillListLeft(edge, dx);
 
+
     }
 
     private void fillListRight(int rightEdge, final int dx) {
-        while (rightEdge + dx < getWidth()
-                && mRightViewIndex < mAdapter.getCount()) {
+        while (rightEdge + dx < getWidth() && mRightViewIndex < mAdapter.getCount()) {
 
-            View child = mAdapter.getView(mRightViewIndex,
-                    mRemovedViewQueue.poll(), this);
+            View child = mAdapter.getView(mRightViewIndex, mRemovedViewQueue.poll(), this);
             addAndMeasureChild(child, -1);
             rightEdge += child.getMeasuredWidth();
 
@@ -231,8 +227,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
 
     private void fillListLeft(int leftEdge, final int dx) {
         while (leftEdge + dx > 0 && mLeftViewIndex >= 0) {
-            View child = mAdapter.getView(mLeftViewIndex,
-                    mRemovedViewQueue.poll(), this);
+            View child = mAdapter.getView(mLeftViewIndex, mRemovedViewQueue.poll(), this);
             addAndMeasureChild(child, 0);
             leftEdge -= child.getMeasuredWidth();
             mLeftViewIndex--;
@@ -267,8 +262,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
             for (int i = 0; i < getChildCount(); i++) {
                 View child = getChildAt(i);
                 int childWidth = child.getMeasuredWidth();
-                child.layout(left, 0, left + childWidth,
-                        child.getMeasuredHeight());
+                child.layout(left, 0, left + childWidth, child.getMeasuredHeight());
                 left += childWidth + child.getPaddingRight();
             }
         }
@@ -311,8 +305,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
                                float velocityY) {
-            return HorizontalListView.this
-                    .onFling(e1, e2, velocityX, velocityY);
+            return HorizontalListView.this.onFling(e1, e2, velocityX, velocityY);
         }
 
         @Override
@@ -333,14 +326,10 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
                 View child = getChildAt(i);
                 if (isEventWithinView(e, child)) {
                     if (mOnItemClicked != null) {
-                        mOnItemClicked.onItemClick(HorizontalListView.this,
-                                child, mLeftViewIndex + 1 + i,
-                                mAdapter.getItemId(mLeftViewIndex + 1 + i));
+                        mOnItemClicked.onItemClick(HorizontalListView.this, child, mLeftViewIndex + 1 + i, mAdapter.getItemId(mLeftViewIndex + 1 + i));
                     }
                     if (mOnItemSelected != null) {
-                        mOnItemSelected.onItemSelected(HorizontalListView.this,
-                                child, mLeftViewIndex + 1 + i,
-                                mAdapter.getItemId(mLeftViewIndex + 1 + i));
+                        mOnItemSelected.onItemSelected(HorizontalListView.this, child, mLeftViewIndex + 1 + i, mAdapter.getItemId(mLeftViewIndex + 1 + i));
                     }
                     break;
                 }
@@ -356,13 +345,11 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
                 View child = getChildAt(i);
                 if (isEventWithinView(e, child)) {
                     if (mOnItemLongClicked != null) {
-                        mOnItemLongClicked.onItemLongClick(
-                                HorizontalListView.this, child, mLeftViewIndex
-                                        + 1 + i,
-                                mAdapter.getItemId(mLeftViewIndex + 1 + i));
+                        mOnItemLongClicked.onItemLongClick(HorizontalListView.this, child, mLeftViewIndex + 1 + i, mAdapter.getItemId(mLeftViewIndex + 1 + i));
                     }
                     break;
                 }
+
             }
         }
 
@@ -379,97 +366,12 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
         }
     };
 
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+
+        getParent().requestDisallowInterceptTouchEvent(true);
+
+        return super.onInterceptTouchEvent(ev);
+    }
+
 }
-//public class HorizontalListViewAdapter extends BaseAdapter {
-//    /** 上下文 */
-//    private Context mContext;
-//    /** 图像数据源 */
-//    private ArrayList<Map<String, Integer>> mImageList;
-//
-//    /** 数据源 */
-//    private ArrayList<Map<String, Integer>> mTextList;
-//    /** Image */
-//    private static String IMAGE = "ic_";
-//
-//    private Map<String, Integer> mMap = null;
-//
-//    /** 构造方法 */
-//    public HorizontalListViewAdapter(Context context) {
-//        this.mContext = context;
-//        initData();
-//    }
-//
-//    /** 初始化数据 */
-//    public void initData() {
-//        mImageList = new ArrayList<Map<String, Integer>>();
-//    /*
-//     * 反射技术
-//     */
-//        Class<?> imageClzz = R.drawable.class;
-//        R.drawable instance = new R.drawable();
-//        // 取得drawable类中所有的字段
-//        Field[] fields = imageClzz.getDeclaredFields();
-//        for (Field field : fields) {
-//            // 获得字段的名字
-//            String name = field.getName();
-//            if (name != null && name.startsWith(IMAGE)) {
-//                try {
-//                    mMap = new HashMap<String, Integer>();
-//                    mMap.put(IMAGE, (Integer) field.get(instance));
-//                    mImageList.add(mMap);
-//                } catch (IllegalAccessException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//        }
-//    }
-//
-//
-//    @Override
-//    public int getCount() {
-//        return mImageList.size();
-//    }
-//
-//    @Override
-//    public Map<String, Integer> getItem(int position) {
-//
-//        return mImageList == null ? null : mImageList.get(position);
-//    }
-//
-//    @Override
-//    public long getItemId(int position) {
-//        return position;
-//    }
-//
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//
-//        ViewHolder holder;
-//        if (convertView == null) {
-//            holder = new ViewHolder();
-//            convertView = LayoutInflater.from(mContext).inflate(
-//                    R.layout.horizontal_list_item, null);
-//            holder.mImage = (ImageView) convertView
-//                    .findViewById(R.id.iv_list_item);
-//            holder.mTitle = (TextView) convertView
-//                    .findViewById(R.id.tv_list_item);
-//            convertView.setTag(holder);
-//        } else {
-//            holder = (ViewHolder) convertView.getTag();
-//        }
-//
-//        if (position == mSelectIndex) {
-//            convertView.setSelected(true);
-//        } else {
-//            convertView.setSelected(false);
-//        }
-//        holder.mImage.setImageResource(getItem(position).get(IMAGE));
-//        return convertView;
-//    }
-//
-//    private class ViewHolder {
-//        /** 图像 */
-//        private ImageView mImage;
-//    }
-//}

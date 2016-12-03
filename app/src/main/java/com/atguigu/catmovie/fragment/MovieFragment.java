@@ -49,6 +49,8 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
     private RelativeLayout rl_select_city;
     private TextView curCity;
     LocalBroadcastManager mLBM ;
+    private ViewPager vp;
+
     @Override
     public View initView() {
         View view = View.inflate(getActivity(), R.layout.fragment_movie, null);
@@ -131,6 +133,8 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
                startActivityForResult(intent, 1);
            }
        });
+
+
     }
 
     private void initFragment() {
@@ -148,7 +152,7 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
 //            mFragments.add(SimpleCardFragment.getInstance(title));
 //        }
         View decorView = getActivity().getWindow().getDecorView();
-        ViewPager vp = ViewFindUtils.find(decorView, R.id.vp);
+        vp = ViewFindUtils.find(decorView, R.id.vp);
         mAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
         vp.setAdapter(mAdapter);
 
@@ -159,6 +163,7 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
         tabLayout_10.setViewPager(vp);
         //设置默认选中第四个位置
         vp.setCurrentItem(0);
+
     }
     @Override
     public void onTabSelect(int position) {
