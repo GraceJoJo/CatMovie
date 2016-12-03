@@ -109,44 +109,44 @@ public class WaitPlayBean {
         public static class ComingBean {
             private String boxInfo;
             private String cat;
-            private double civilPubSt;
+            private String civilPubSt;
             private String comingTitle;
             private String desc;
             private String dir;
-            private double dur;
-            private double effectShowNum;
+            private String dur;
+            private String effectShowNum;
             private boolean globalReleased;
             private boolean headLineShow;
-            private double id;
+            private String id;
             private String img;
             private boolean late;
-            private double localPubSt;
-            private double mk;
+            private String localPubSt;
+            private String mk;
             private String nm;
-            private double pn;
+            private String pn;
             private boolean preShow;
-            private double proScore;
-            private double proScoreNum;
-            private long pubDate;
+            private String proScore;
+            private String proScoreNum;
+            private String pubDate;
             private String pubDesc;
-            private double pubShowNum;
-            private double recentShowDate;
-            private double recentShowNum;
+            private String pubShowNum;
+            private String recentShowDate;
+            private String recentShowNum;
             private String rt;
-            private double sc;
+            private String sc;
             private String scm;
-            private double showNum;
-            private double showst;
-            private double snum;
+            private String showNum;
+            private String showst;
+            private String snum;
             private String star;
             private String ver;
-            private double videoId;
+            private String videoId;
             private String videoName;
             private String videourl;
-            private double vnum;
-            private double weight;
-            private double wish;
-            private double wishst;
+            private String vnum;
+            private String weight;
+            private String wish;
+            private String wishst;
             private List<?> headLinesVO;
 
             public String getBoxInfo() {
@@ -165,11 +165,11 @@ public class WaitPlayBean {
                 this.cat = cat;
             }
 
-            public double getCivilPubSt() {
+            public String getCivilPubSt() {
                 return civilPubSt;
             }
 
-            public void setCivilPubSt(double civilPubSt) {
+            public void setCivilPubSt(String civilPubSt) {
                 this.civilPubSt = civilPubSt;
             }
 
@@ -197,19 +197,19 @@ public class WaitPlayBean {
                 this.dir = dir;
             }
 
-            public double getDur() {
+            public String getDur() {
                 return dur;
             }
 
-            public void setDur(int dur) {
+            public void setDur(String dur) {
                 this.dur = dur;
             }
 
-            public double getEffectShowNum() {
+            public String getEffectShowNum() {
                 return effectShowNum;
             }
 
-            public void setEffectShowNum(double effectShowNum) {
+            public void setEffectShowNum(String effectShowNum) {
                 this.effectShowNum = effectShowNum;
             }
 
@@ -229,11 +229,11 @@ public class WaitPlayBean {
                 this.headLineShow = headLineShow;
             }
 
-            public double getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 
@@ -253,19 +253,19 @@ public class WaitPlayBean {
                 this.late = late;
             }
 
-            public double getLocalPubSt() {
+            public String getLocalPubSt() {
                 return localPubSt;
             }
 
-            public void setLocalPubSt(int localPubSt) {
+            public void setLocalPubSt(String localPubSt) {
                 this.localPubSt = localPubSt;
             }
 
-            public double getMk() {
+            public String getMk() {
                 return mk;
             }
 
-            public void setMk(int mk) {
+            public void setMk(String mk) {
                 this.mk = mk;
             }
 
@@ -277,11 +277,11 @@ public class WaitPlayBean {
                 this.nm = nm;
             }
 
-            public double getPn() {
+            public String getPn() {
                 return pn;
             }
 
-            public void setPn(int pn) {
+            public void setPn(String pn) {
                 this.pn = pn;
             }
 
@@ -293,27 +293,27 @@ public class WaitPlayBean {
                 this.preShow = preShow;
             }
 
-            public double getProScore() {
+            public String getProScore() {
                 return proScore;
             }
 
-            public void setProScore(int proScore) {
+            public void setProScore(String proScore) {
                 this.proScore = proScore;
             }
 
-            public double getProScoreNum() {
+            public String getProScoreNum() {
                 return proScoreNum;
             }
 
-            public void setProScoreNum(int proScoreNum) {
+            public void setProScoreNum(String proScoreNum) {
                 this.proScoreNum = proScoreNum;
             }
 
-            public long getPubDate() {
+            public String getPubDate() {
                 return pubDate;
             }
 
-            public void setPubDate(long pubDate) {
+            public void setPubDate(String pubDate) {
                 this.pubDate = pubDate;
             }
 
@@ -325,27 +325,27 @@ public class WaitPlayBean {
                 this.pubDesc = pubDesc;
             }
 
-            public double getPubShowNum() {
+            public String getPubShowNum() {
                 return pubShowNum;
             }
 
-            public void setPubShowNum(double pubShowNum) {
+            public void setPubShowNum(String pubShowNum) {
                 this.pubShowNum = pubShowNum;
             }
 
-            public double getRecentShowDate() {
+            public String getRecentShowDate() {
                 return recentShowDate;
             }
 
-            public void setRecentShowDate(double recentShowDate) {
+            public void setRecentShowDate(String recentShowDate) {
                 this.recentShowDate = recentShowDate;
             }
 
-            public double getRecentShowNum() {
+            public String getRecentShowNum() {
                 return recentShowNum;
             }
 
-            public void setRecentShowNum(int recentShowNum) {
+            public void setRecentShowNum(String recentShowNum) {
                 this.recentShowNum = recentShowNum;
             }
 
@@ -357,11 +357,11 @@ public class WaitPlayBean {
                 this.rt = rt;
             }
 
-            public double getSc() {
+            public String getSc() {
                 return sc;
             }
 
-            public void setSc(double sc) {
+            public void setSc(String sc) {
                 this.sc = sc;
             }
 
@@ -373,27 +373,27 @@ public class WaitPlayBean {
                 this.scm = scm;
             }
 
-            public double getShowNum() {
+            public String getShowNum() {
                 return showNum;
             }
 
-            public void setShowNum(double showNum) {
+            public void setShowNum(String showNum) {
                 this.showNum = showNum;
             }
 
-            public double getShowst() {
+            public String getShowst() {
                 return showst;
             }
 
-            public void setShowst(double showst) {
+            public void setShowst(String showst) {
                 this.showst = showst;
             }
 
-            public double getSnum() {
+            public String getSnum() {
                 return snum;
             }
 
-            public void setSnum(double snum) {
+            public void setSnum(String snum) {
                 this.snum = snum;
             }
 
@@ -413,11 +413,11 @@ public class WaitPlayBean {
                 this.ver = ver;
             }
 
-            public double getVideoId() {
+            public String getVideoId() {
                 return videoId;
             }
 
-            public void setVideoId(double videoId) {
+            public void setVideoId(String videoId) {
                 this.videoId = videoId;
             }
 
@@ -437,35 +437,35 @@ public class WaitPlayBean {
                 this.videourl = videourl;
             }
 
-            public double getVnum() {
+            public String getVnum() {
                 return vnum;
             }
 
-            public void setVnum(int vnum) {
+            public void setVnum(String vnum) {
                 this.vnum = vnum;
             }
 
-            public double getWeight() {
+            public String getWeight() {
                 return weight;
             }
 
-            public void setWeight(int weight) {
+            public void setWeight(String weight) {
                 this.weight = weight;
             }
 
-            public double getWish() {
+            public String getWish() {
                 return wish;
             }
 
-            public void setWish(double wish) {
+            public void setWish(String wish) {
                 this.wish = wish;
             }
 
-            public double getWishst() {
+            public String getWishst() {
                 return wishst;
             }
 
-            public void setWishst(double wishst) {
+            public void setWishst(String wishst) {
                 this.wishst = wishst;
             }
 

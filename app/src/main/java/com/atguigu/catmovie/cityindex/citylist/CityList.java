@@ -322,6 +322,12 @@ public class CityList extends Activity {
     }
     //***********百度定位********************
 
+    /**
+     * 搜索返回的结果
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
@@ -329,6 +335,8 @@ public class CityList extends Activity {
                 String city = data.getStringExtra("city");
                 Intent intent = new Intent();
                 intent.putExtra("city", city.substring(0,2));
+                //将搜索选中的城市存储到sp中
+                SpUtil.getInstance(MyApplication.getmContext()).save("city",city.substring(0,2));
                 setResult(2, intent);
                 finish();
                 break;

@@ -208,4 +208,11 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
                     break;
             }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        要解注册
+//        mLBM.unregisterReceiver();
+    }
 }
