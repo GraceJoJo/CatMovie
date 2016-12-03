@@ -2,6 +2,8 @@ package com.atguigu.catmovie.utils;
 
 import android.content.Context;
 
+import com.atguigu.catmovie.MyApplication;
+
 /**
  * 作者：尚硅谷-杨光福 on 2016/9/12 15:29
  * 微信：yangguangfu520
@@ -14,6 +16,10 @@ public class DensityUtil {
      */
     public static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+    public static int dip2px( float dpValue) {
+        final float scale = MyApplication.getmContext().getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
 

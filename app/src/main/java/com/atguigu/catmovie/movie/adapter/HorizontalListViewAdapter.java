@@ -67,7 +67,7 @@ public class HorizontalListViewAdapter extends BaseAdapter {
                 holder.textview.setText("年代");
             }
             holder.textview.setBackgroundColor(Color.WHITE);
-            holder.textview.setTextColor(Color.parseColor("#FF8B8686"));
+            holder.textview.setTextColor(Color.parseColor("#8C8C8C"));
         } else {
             holder.textview.setText(datas.get(position).getTagName());
             holder.textview.setBackgroundResource(R.drawable.text_shape);

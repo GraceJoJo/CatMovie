@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="100dp">
+
+        <LinearLayout
+            android:id="@+id/ll_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_reying"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="热映口碑"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_movie_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="你的名字"
+                android:textSize="12sp" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_title_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:paddingTop="10dp"
+            android:src="@android:mipmap/sym_def_app_icon"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/ll_left"/>
+    <ImageView
+        android:id="@+id/iv_title_icon2"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:src="@drawable/search"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="20dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/iv_title_icon"
+        android:background="#F2F2F2">
+    </TextView>
+
+    <TextView
+        android:layout_width="1dp"
+        android:layout_height="100dp"
+        android:background="#F2F2F2"
+        android:layout_alignParentRight="true">
+    </TextView>
+</RelativeLayout>

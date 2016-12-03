@@ -9,7 +9,11 @@ import android.widget.Toast;
 
 import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseFragment;
+import com.atguigu.catmovie.movie.adapter.AllprizeAdapter;
 import com.atguigu.catmovie.movie.adapter.HorizontalListViewAdapter;
+import com.atguigu.catmovie.movie.adapter.PrizeAdapter;
+import com.atguigu.catmovie.movie.bean.AllPrizeBean;
+import com.atguigu.catmovie.movie.bean.PrizeBean;
 import com.atguigu.catmovie.movie.bean.TagBean;
 import com.atguigu.catmovie.net.CallBack;
 import com.atguigu.catmovie.net.RequestNet;
@@ -26,9 +30,6 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
     private int TAG1;
     private int TAG2;
     private int TAG3;
-    //    private static final int TAG1 = 1;
-//    private static final int TAG2 = 2;
-//    private static final int TAG3 = 3;
     private HorizontalListViewAdapter hlva1;
     private HorizontalListViewAdapter hlva2;
     private HorizontalListViewAdapter hlva3;
@@ -44,6 +45,9 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
     private String type2;
     private String type3;
     private GridView gridview_find;
+    private PrizeBean prizeBean;
+    private HorizontalListView horizontallistview_allprize;
+    private AllPrizeBean allPrizeBean;
 
     @Override
     public View initView() {
@@ -52,7 +56,8 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
         hlv1 = (HorizontalListView) view.findViewById(R.id.horizontallistview1);
         hlv2 = (HorizontalListView) view.findViewById(R.id.horizontallistview2);
         hlv3 = (HorizontalListView) view.findViewById(R.id.horizontallistview3);
-        gridview_find = (GridView) view.findViewById(R.id.gridview_find);
+        gridview_find = (GridView) view.findViewById(R.id.gridview_find);//热门口碑
+        horizontallistview_allprize = (HorizontalListView) view.findViewById(R.id.horizontallistview_allprize);//全部电影奖项
         return view;
     }
 
@@ -71,7 +76,7 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
                 .url(ConstantsUtils.TAG_URL, new CallBack() {
                     @Override
                     public void onError(Exception e) {
-                        Toast.makeText(getActivity(), "发现页面联网失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "亲，没网了", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -79,9 +84,10 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
                         switch (id) {
                             case 100:
                                 if (response != null) {
-                                    Log.e("TAG", "发现页面联网成功response==" + response);
+//                                    Log.e("TAG", "发现页面联网成功response==" + response);
 //                                    rl_loading_common.setVisibility(View.GONE);
-                                    Log.e("TAG", "联网成功");
+//                                    Log.e("TAG", "联网成功");
+
                                     processJson(response);
                                     if (tagBean.getData().size() > 0 && tagBean != null) {
                                         hlva1 = new HorizontalListViewAdapter(getActivity(), tagList1, type1);
@@ -101,11 +107,14 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
                         }
                     }
                 });
-        //奖项请求的URL
+        /**
+         *   奖项请求的URL--GridView
+         */
         RequestNet.url(ConstantsUtils.PRIZE_URL, new CallBack() {
             @Override
             public void onError(Exception e) {
-                Log.e("TAG", "奖项请求的URL--");
+//                Log.e("TAG", "奖项请求的URL--");
+                Toast.makeText(getActivity(), "亲，没网了", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -113,8 +122,35 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
                 switch (id) {
                     case 100:
                         if (response != null) {
-                            Log.e("TAG", "奖项请求联网成功response==" + response);
+//                            Log.e("TAG", "奖项请求联网成功response==" + response);
                             processPrizeJson(response);
+                            gridview_find.setAdapter(new PrizeAdapter(prizeBean, getActivity()));
+                        }
+                        break;
+                    case 101:
+                        break;
+                }
+            }
+        });
+        /**
+         * 全部奖项请求
+         */
+        RequestNet.url(ConstantsUtils.ALL_PRIZE_URL, new CallBack() {
+            @Override
+            public void onError(Exception e) {
+                Log.e("TAG", "全部奖项请求联网失败response--");
+            }
+
+            @Override
+            public void onSuccess(String response, int id) {
+                switch (id) {
+                    case 100:
+                        if (response != null) {
+                            Log.e("TAG", "全部奖项请求联网成功response==" + response);
+                            processAllPrizeJson(response);
+                            if (allPrizeBean != null && allPrizeBean.getData().size() > 0) {
+                                horizontallistview_allprize.setAdapter(new AllprizeAdapter(getActivity(),allPrizeBean));
+                            }
                         }
                         break;
                     case 101:
@@ -126,11 +162,22 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
     }
 
     /**
+     * 全部奖项--数据解析
+     *
+     * @param json
+     */
+    private void processAllPrizeJson(String json) {
+        allPrizeBean = new Gson().fromJson(json, AllPrizeBean.class);
+        Log.e("TAG", "allPrizeBean==" + allPrizeBean.getData().size());
+    }
+
+    /**
      * 奖项--数据解析
+     *
      * @param json
      */
     private void processPrizeJson(String json) {
-
+        prizeBean = new Gson().fromJson(json, PrizeBean.class);
     }
 
     private void processJson(String json) {

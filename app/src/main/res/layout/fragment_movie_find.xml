@@ -13,7 +13,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="10dp">
 
             <include layout="@layout/search_center_common"></include>
 
@@ -43,11 +44,49 @@
             android:layout_width="match_parent"
             android:layout_height="16dp"
             android:background="@color/color_grey_light"></View>
-        <GridView
-            android:id="@+id/gridview_find"
+       <com.atguigu.catmovie.ui.NoScrollGridView
+           android:id="@+id/gridview_find"
+           android:layout_width="match_parent"
+           android:numColumns="2"
+           android:layout_height="180dp"
+           android:minHeight="180dp">
+       </com.atguigu.catmovie.ui.NoScrollGridView>
+        <View
             android:layout_width="match_parent"
-            android:layout_height="200dp">
-
-        </GridView>
+            android:layout_height="16dp"
+            android:background="@color/color_grey_light"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="全球电影奖项"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#232323"/>
+            <com.atguigu.catmovie.ui.HorizontalListView
+                android:id="@+id/horizontallistview_allprize"
+                android:layout_width="match_parent"
+                android:layout_height="240dp">
+            </com.atguigu.catmovie.ui.HorizontalListView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_grey_light"></View>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="全部电影奖项"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_margin="3dp"
+                android:layout_gravity="center"
+                android:drawableRight="@drawable/a5r"
+                android:gravity="center_horizontal"
+                android:textColor="#F34142"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
