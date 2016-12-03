@@ -12,14 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atguigu.catmovie.R;
-import com.atguigu.catmovie.base.BaseFragment;
+import com.atguigu.catmovie.base.BaseViewPagerFragment;
 import com.atguigu.catmovie.movie.adapter.StickyExampleAdapter;
 import com.atguigu.catmovie.movie.bean.StickyExampleBean;
 import com.atguigu.catmovie.movie.bean.WaitPlayBean;
+import com.atguigu.catmovie.movie.utils.StringUitls;
 import com.atguigu.catmovie.net.CallBack;
 import com.atguigu.catmovie.net.RequestNet;
 import com.atguigu.catmovie.utils.ConstantsUtils;
-import com.atguigu.catmovie.movie.utils.StringUitls;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 /**
  * 电影--待映--页面
  */
-public class WaitPlayFragment extends BaseFragment implements View.OnClickListener {
+public class WaitPlayFragment extends BaseViewPagerFragment implements View.OnClickListener {
 
     @Bind(R.id.et_search_center)
     EditText etSearchCenter;
@@ -65,9 +65,13 @@ public class WaitPlayFragment extends BaseFragment implements View.OnClickListen
 
         rlLoadingCommon.setVisibility(View.VISIBLE);
         rlErrorCommon.setVisibility(View.GONE);
-        getDataFromNet();
 
         initListener();
+    }
+//延迟加载
+    @Override
+    protected void lazyLoad() {
+        getDataFromNet();
     }
 
     private void initListener() {

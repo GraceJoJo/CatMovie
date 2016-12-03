@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atguigu.catmovie.R;
-import com.atguigu.catmovie.base.BaseFragment;
+import com.atguigu.catmovie.base.BaseViewPagerFragment;
 import com.atguigu.catmovie.movie.adapter.HotPlayFragmentAdapter;
 import com.atguigu.catmovie.movie.bean.AdvertiseImageBean;
 import com.atguigu.catmovie.movie.bean.HotPlayBean;
@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 /**
  * 电影---热映Fragment
  */
-public class HotPlayFragment extends BaseFragment implements View.OnClickListener {
+public class HotPlayFragment extends BaseViewPagerFragment implements View.OnClickListener {
     private ArrayList<String> datas;
     private LinearLayout ll_search_center;
     private ListView listviewHot;
@@ -74,10 +74,15 @@ public class HotPlayFragment extends BaseFragment implements View.OnClickListene
         rl_error_common.setVisibility(View.GONE);
         materialRefreshLayout.setVisibility(View.GONE);
 
-        getDataFromServer();
+
 
 
         initLister();
+    }
+        //延迟加载
+    @Override
+    protected void lazyLoad() {
+        getDataFromServer();
     }
 
     private void setRefresh() {

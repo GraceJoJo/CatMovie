@@ -5,10 +5,12 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atguigu.catmovie.R;
-import com.atguigu.catmovie.base.BaseFragment;
+import com.atguigu.catmovie.base.BaseViewPagerFragment;
 import com.atguigu.catmovie.movie.adapter.AllprizeAdapter;
 import com.atguigu.catmovie.movie.adapter.HorizontalListViewAdapter;
 import com.atguigu.catmovie.movie.adapter.PrizeAdapter;
@@ -26,10 +28,7 @@ import java.util.List;
 /**
  * 找片--页面--Fragment
  */
-public class FindPlayFragment extends BaseFragment implements GestureDetector.OnGestureListener {
-    private int TAG1;
-    private int TAG2;
-    private int TAG3;
+public class FindPlayFragment extends BaseViewPagerFragment implements GestureDetector.OnGestureListener, View.OnClickListener {
     private HorizontalListViewAdapter hlva1;
     private HorizontalListViewAdapter hlva2;
     private HorizontalListViewAdapter hlva3;
@@ -48,6 +47,9 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
     private PrizeBean prizeBean;
     private HorizontalListView horizontallistview_allprize;
     private AllPrizeBean allPrizeBean;
+    private RelativeLayout rl_loading_common;
+    private RelativeLayout rl_error_common;
+    private TextView click_refresh;
 
     @Override
     public View initView() {
@@ -58,14 +60,23 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
         hlv3 = (HorizontalListView) view.findViewById(R.id.horizontallistview3);
         gridview_find = (GridView) view.findViewById(R.id.gridview_find);//热门口碑
         horizontallistview_allprize = (HorizontalListView) view.findViewById(R.id.horizontallistview_allprize);//全部电影奖项
+
+        rl_loading_common = (RelativeLayout) view.findViewById(R.id.rl_loading_common);//加载的页面
+        rl_error_common = (RelativeLayout) view.findViewById(R.id.rl_error_common);//出错页面
+        click_refresh = (TextView) view.findViewById(R.id.click_refresh);//点击刷新
         return view;
     }
 
     @Override
     public void initData() {
 
-        getDataFromNet();
+    }
+    //延迟加载
+    @Override
+    protected void lazyLoad() {
 
+        getDataFromNet();
+        click_refresh.setOnClickListener(this);
     }
 
     private void getDataFromNet() {
@@ -87,7 +98,6 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
 //                                    Log.e("TAG", "发现页面联网成功response==" + response);
 //                                    rl_loading_common.setVisibility(View.GONE);
 //                                    Log.e("TAG", "联网成功");
-
                                     processJson(response);
                                     if (tagBean.getData().size() > 0 && tagBean != null) {
                                         hlva1 = new HorizontalListViewAdapter(getActivity(), tagList1, type1);
@@ -149,7 +159,7 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
                             Log.e("TAG", "全部奖项请求联网成功response==" + response);
                             processAllPrizeJson(response);
                             if (allPrizeBean != null && allPrizeBean.getData().size() > 0) {
-                                horizontallistview_allprize.setAdapter(new AllprizeAdapter(getActivity(),allPrizeBean));
+                                horizontallistview_allprize.setAdapter(new AllprizeAdapter(getActivity(), allPrizeBean));
                             }
                         }
                         break;
@@ -189,7 +199,17 @@ public class FindPlayFragment extends BaseFragment implements GestureDetector.On
         type2 = tagBean.getData().get(1).getTagTypeName();
         type3 = tagBean.getData().get(2).getTagTypeName();
     }
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.click_refresh :
+                //错误页面的点击重新刷新请求网络
+                getDataFromNet();
+                rl_error_common.setVisibility(View.GONE);
+                rl_loading_common.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
     @Override
     public boolean onDown(MotionEvent e) {
         return false;

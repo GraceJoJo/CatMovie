@@ -17,6 +17,8 @@
             android:layout_marginBottom="10dp">
 
             <include layout="@layout/search_center_common"></include>
+            <include layout="@layout/loading_layout"></include>
+            <include layout="@layout/error_layout"></include>
 
             <com.atguigu.catmovie.ui.HorizontalListView
                 android:id="@+id/horizontallistview1"
