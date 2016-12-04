@@ -2,6 +2,7 @@ package com.atguigu.catmovie.movie.fragment;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.atguigu.catmovie.MyApplication;
 import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseViewPagerFragment;
 import com.atguigu.catmovie.movie.adapter.HotPlayFragmentAdapter;
@@ -19,6 +21,7 @@ import com.atguigu.catmovie.movie.bean.HotPlayBean;
 import com.atguigu.catmovie.net.CallBack;
 import com.atguigu.catmovie.net.RequestNet;
 import com.atguigu.catmovie.utils.ConstantsUtils;
+import com.atguigu.catmovie.utils.SpUtil;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.google.gson.Gson;
@@ -37,6 +40,7 @@ import butterknife.ButterKnife;
  * 电影---热映Fragment
  */
 public class HotPlayFragment extends BaseViewPagerFragment implements View.OnClickListener {
+    private static final String TAG = "hot";
     private ArrayList<String> datas;
     private LinearLayout ll_search_center;
     private ListView listviewHot;
@@ -47,6 +51,28 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
     private List<HotPlayBean.DataBean.MoviesBean> movieList;
     private TextView click_refresh;
     private MaterialRefreshLayout materialRefreshLayout;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+//                case 1:
+//                    if (movieList != null && movieList.size() > 0) {
+//                        Log.e(TAG, "222222222222222222");
+//
+//                    } else {
+//                        Toast.makeText(getActivity(), "亲，网络出错了", Toast.LENGTH_SHORT).show();
+//                    }
+                case 2:
+                    if (banner != null && imageurls.size() > 0) {
+                        setBannerStyle();
+                    }
+                    break;
+            }
+
+
+        }
+    };
 
     @Override
     public View initView() {
@@ -57,7 +83,7 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
         rl_loading_common = (RelativeLayout) view.findViewById(R.id.rl_loading_common);//加载的页面
         rl_error_common = (RelativeLayout) view.findViewById(R.id.rl_error_common);//出错页面
         click_refresh = (TextView) view.findViewById(R.id.click_refresh);//点击刷新
-        materialRefreshLayout = (MaterialRefreshLayout)view.findViewById(R.id.refresh);
+        materialRefreshLayout = (MaterialRefreshLayout) view.findViewById(R.id.refresh);
         //初始化头布局--控件
         ll_search_center = (LinearLayout) headView.findViewById(R.id.ll_search_center);
         banner = (Banner) headView.findViewById(R.id.banner);
@@ -73,16 +99,65 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
         rl_loading_common.setVisibility(View.VISIBLE);
         rl_error_common.setVisibility(View.GONE);
         materialRefreshLayout.setVisibility(View.GONE);
-
+//        String hot_bean_json = SpUtil.getInstance(MyApplication.getmContext()).getString("hot_bean", null);
+//        if (!TextUtils.isEmpty(hot_bean_json)) {
+//            Log.e(TAG, "hot_bean_json==" + hot_bean_json);
+//            processListViewJson(hot_bean_json);
+//            listviewHot.setAdapter(new HotPlayFragmentAdapter(mContext, movieList));
+//        } else {
+//            getDataFromServer();
+//        }
+//        String hot_images_json = SpUtil.getInstance(MyApplication.getmContext()).getString("hot_images", null);
+//        if (!TextUtils.isEmpty(hot_images_json)) {
+//            Gson gson = new Gson();
+//            AdvertiseImageBean advertiseImageBean = gson.fromJson(hot_images_json, AdvertiseImageBean.class);
+//            List<AdvertiseImageBean.DataBean> datas = advertiseImageBean.getData();
+//            for (int i = 0; i < datas.size(); i++) {
+//                imageurls.add(datas.get(i).getImgUrl());
+//            }
+//        } else {
+//            getImageFromNet();
+        //        }
         getDataFromServer();
-
-
         initLister();
     }
-        //延迟加载
+
+    private void getImageFromNet() {
+        //请求热映的广告条图片
+        RequestNet
+                .get()
+                .url(ConstantsUtils.HOT_IAMGE_URL, new CallBack() {
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(getActivity(), "二次封装成功，联网失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "亲,没网了", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onSuccess(String response, int id) {
+                        switch (id) {
+                            case 100:
+                                if (response != null) {
+                                    setRefresh();
+                                    rl_loading_common.setVisibility(View.GONE);
+                                    Log.e(TAG, "hot-图片--联网成功");
+                                    processImageJson(response);
+                                    handler.sendEmptyMessageDelayed(2, 2000);
+
+                                }
+                                break;
+                            case 101:
+                                break;
+                        }
+                    }
+                });
+
+    }
+
+    //延迟加载
     @Override
     protected void lazyLoad() {
-
+//        getDataFromServer();
     }
 
     private void setRefresh() {
@@ -112,49 +187,24 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
      * 延迟请求网络--模拟加载页面的效果
      */
     private void getDataFromServer() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getDataFromNet();
-            }
-        }, 3000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+        getDataFromNet();
+        getImageFromNet();
+//            }
+//        }, 3000);
     }
 
     private void initLister() {
         click_refresh.setOnClickListener(this);
     }
 
+
     /**
      * 请求广告条和ListView中的数据
      */
     private void getDataFromNet() {
-        //请求热映的广告条图片
-        RequestNet
-                .get()
-                .url(ConstantsUtils.HOT_IAMGE_URL, new CallBack() {
-                    @Override
-                    public void onError(Exception e) {
-                        Toast.makeText(getActivity(), "二次封装成功，联网失败", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getActivity(), "亲,没网了", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onSuccess(String response, int id) {
-                        switch (id) {
-                            case 100:
-                                if (response != null) {
-                                    setRefresh();
-                                    rl_loading_common.setVisibility(View.GONE);
-                                    Log.e("TAG", "联网成功");
-                                    processImageJson(response);
-                                    setBannerStyle();
-                                }
-                                break;
-                            case 101:
-                                break;
-                        }
-                    }
-                });
 
         //请求热映的ListView数据
         RequestNet
@@ -174,12 +224,14 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
                                 if (response != null) {
                                     rl_loading_common.setVisibility(View.GONE);
                                     listviewHot.setVisibility(View.VISIBLE);
-                                    Log.e("TAG", "联网成功");
-                                    Log.e("TAG", "ListResponse==" + response);
+                                    Log.e(TAG, "json---集---联网成功");
+                                    Log.e(TAG, "json---集合--ListResponse==" + response);
                                     //解析数据
                                     processListViewJson(response);
                                     //设置适配器显示
-                                    listviewHot.setAdapter(new HotPlayFragmentAdapter(mContext,movieList));
+//                                    handler.sendEmptyMessageDelayed(1, 2000);
+                                    listviewHot.setVisibility(View.VISIBLE);
+                                    listviewHot.setAdapter(new HotPlayFragmentAdapter(mContext, movieList));
                                 }
                                 break;
                             case 101:
@@ -188,12 +240,14 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
                     }
                 });
     }
+
     //解析Hot的ListView数据
     private void processListViewJson(String json) {
         Gson gson = new Gson();
         HotPlayBean hotPlayBean = gson.fromJson(json, HotPlayBean.class);
         movieList = hotPlayBean.getData().getMovies();
-        Log.e("TAG", "movieLsit==="+movieList.size());
+        SpUtil.getInstance(MyApplication.getmContext()).save("hot_bean", json);
+        Log.e(TAG, "movieLsit===" + movieList.size());
     }
 
     //解析广告条数据
@@ -201,8 +255,12 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
         Gson gson = new Gson();
         AdvertiseImageBean advertiseImageBean = gson.fromJson(json, AdvertiseImageBean.class);
         List<AdvertiseImageBean.DataBean> datas = advertiseImageBean.getData();
+
         for (int i = 0; i < datas.size(); i++) {
             imageurls.add(datas.get(i).getImgUrl());
+        }
+        if (advertiseImageBean != null) {
+            SpUtil.getInstance(MyApplication.getmContext()).save("hot_images", json);
         }
     }
 
@@ -229,7 +287,7 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.click_refresh :
+            case R.id.click_refresh:
                 //错误页面的点击重新刷新请求网络
                 getDataFromServer();
                 rl_error_common.setVisibility(View.GONE);
@@ -246,6 +304,22 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.sendEmptyMessageDelayed(1, 2000);
+        handler.sendEmptyMessageDelayed(2, 2000);
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacksAndMessages(null);
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
+    }
 }

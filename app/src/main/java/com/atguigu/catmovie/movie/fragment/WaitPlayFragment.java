@@ -1,6 +1,6 @@
 package com.atguigu.catmovie.movie.fragment;
 
-import android.os.SystemClock;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.atguigu.catmovie.MyApplication;
 import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseViewPagerFragment;
 import com.atguigu.catmovie.movie.adapter.StickyExampleAdapter;
@@ -23,6 +24,7 @@ import com.atguigu.catmovie.movie.utils.StringUitls;
 import com.atguigu.catmovie.net.CallBack;
 import com.atguigu.catmovie.net.RequestNet;
 import com.atguigu.catmovie.utils.ConstantsUtils;
+import com.atguigu.catmovie.utils.SpUtil;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ import butterknife.ButterKnife;
 /**
  * 电影--待映--页面
  */
-public class    WaitPlayFragment extends BaseViewPagerFragment implements View.OnClickListener {
+public class WaitPlayFragment extends BaseViewPagerFragment implements View.OnClickListener {
 
     private static final String TAG = "WAIT";
     @Bind(R.id.et_search_center)
@@ -74,7 +76,8 @@ public class    WaitPlayFragment extends BaseViewPagerFragment implements View.O
         getDataFromNet();
         initListener();
     }
-//延迟加载
+
+    //延迟加载
     @Override
     protected void lazyLoad() {
 
@@ -149,10 +152,15 @@ public class    WaitPlayFragment extends BaseViewPagerFragment implements View.O
                                     Log.e("TAG", "待映页面--Json==" + response);
                                     processJson(response);
                                     recycleview.setLayoutManager(new LinearLayoutManager(mContext));
-                                    SystemClock.sleep(5000);
-                                    if(comingList!=null&&comingList.size()>0&&recentRespectBean!=null&recentRespectBean.getData().getComing().size()>0&&yugaoBean!=null&&yugaoBean.getData().size()>0) {
-                                        recycleview.setAdapter(new StickyExampleAdapter(mContext, getData(), comingList,recentRespectBean,yugaoBean));
-                                    }
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (comingList != null && comingList.size() > 0 && recentRespectBean != null & recentRespectBean.getData().getComing().size() > 0 && yugaoBean != null && yugaoBean.getData().size() > 0) {
+                                                recycleview.setAdapter(new StickyExampleAdapter(mContext, getData(), comingList, recentRespectBean, yugaoBean));
+                                            }
+                                        }
+                                    }, 5000);
+//
                                 }
                                 break;
                             case 101:
@@ -160,7 +168,6 @@ public class    WaitPlayFragment extends BaseViewPagerFragment implements View.O
                         }
                     }
                 });
-
         //近期最受期待
         RequestNet
                 .get()
@@ -219,10 +226,11 @@ public class    WaitPlayFragment extends BaseViewPagerFragment implements View.O
 
     }
 
+
     private void processYugaoJson(String json) {
         Gson gson = new Gson();
         yugaoBean = gson.fromJson(json, YugaoBean.class);
-        Log.e(TAG, "预告"+ yugaoBean.getData().size()+"");
+        Log.e(TAG, "预告" + yugaoBean.getData().size() + "");
     }
 
     private void processRespectJson(String json) {
@@ -230,6 +238,7 @@ public class    WaitPlayFragment extends BaseViewPagerFragment implements View.O
         recentRespectBean = gson.fromJson(json, RecentRespectBean.class);
         //近期最受期待的集合数据
         Log.e(TAG, "recentRespectBean==" + recentRespectBean.getData().getComing().size());
+        SpUtil.getInstance(MyApplication.getmContext()).save("respect", json);
     }
 
 
@@ -238,9 +247,9 @@ public class    WaitPlayFragment extends BaseViewPagerFragment implements View.O
         String constantsUrl = "http://p0.meituan.net/165.220/movie/f2820b28cff46c530a1aee47a2c00011274783.jpg";
         for (int index = 0; index < 30; index++) {
             if (index == 0) {
-                stickyExampleBeans.add(new StickyExampleBean("预告片推荐", "电影" + index, "000", "", "", constantsUrl,false));
+                stickyExampleBeans.add(new StickyExampleBean("预告片推荐", "电影" + index, "000", "", "", constantsUrl, false));
             } else if (index == 1) {
-                stickyExampleBeans.add(new StickyExampleBean("近期最受期待", "电影" + index, "000", "", "", constantsUrl,false));
+                stickyExampleBeans.add(new StickyExampleBean("近期最受期待", "电影" + index, "000", "", "", constantsUrl, false));
             } else if (index < comingList.size() + 2) {
                 //设置一个死的图片路径
 
@@ -274,7 +283,7 @@ public class    WaitPlayFragment extends BaseViewPagerFragment implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.click_refresh :
+            case R.id.click_refresh:
                 getDataFromNet();
                 rlErrorCommon.setVisibility(View.GONE);
                 rlLoadingCommon.setVisibility(View.VISIBLE);
