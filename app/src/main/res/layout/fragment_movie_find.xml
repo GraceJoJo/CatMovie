@@ -46,7 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="16dp"
             android:background="@color/color_grey_light"></View>
-       <com.atguigu.catmovie.ui.NoScrollGridView
+
+        <com.atguigu.catmovie.ui.NoScrollGridView
            android:id="@+id/gridview_find"
            android:layout_width="match_parent"
            android:numColumns="2"

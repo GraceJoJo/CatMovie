@@ -69,14 +69,14 @@ public class FindPlayFragment extends BaseViewPagerFragment implements GestureDe
 
     @Override
     public void initData() {
-
+        getDataFromNet();
     }
     //延迟加载
     @Override
     protected void lazyLoad() {
 
-        getDataFromNet();
-        click_refresh.setOnClickListener(this);
+
+//        click_refresh.setOnClickListener(this);
     }
 
     private void getDataFromNet() {

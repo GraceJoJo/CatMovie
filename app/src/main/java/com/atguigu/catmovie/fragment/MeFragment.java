@@ -102,9 +102,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         Log.e(TAG, "onHiddenChanged" + hidden);
-        if(!hidden) {
             isFragmentVisible();
-        }
     }
 
     private void isFragmentVisible() {
@@ -126,5 +124,12 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         super.onStop();
         isFragmentVisible();
         Log.e(TAG, "onStop");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause");
+        isFragmentVisible();
     }
 }

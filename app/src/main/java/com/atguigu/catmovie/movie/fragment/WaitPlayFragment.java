@@ -1,5 +1,6 @@
 package com.atguigu.catmovie.movie.fragment;
 
+import android.os.SystemClock;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,8 +15,10 @@ import android.widget.Toast;
 import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseViewPagerFragment;
 import com.atguigu.catmovie.movie.adapter.StickyExampleAdapter;
+import com.atguigu.catmovie.movie.bean.RecentRespectBean;
 import com.atguigu.catmovie.movie.bean.StickyExampleBean;
 import com.atguigu.catmovie.movie.bean.WaitPlayBean;
+import com.atguigu.catmovie.movie.bean.YugaoBean;
 import com.atguigu.catmovie.movie.utils.StringUitls;
 import com.atguigu.catmovie.net.CallBack;
 import com.atguigu.catmovie.net.RequestNet;
@@ -31,8 +34,9 @@ import butterknife.ButterKnife;
 /**
  * 电影--待映--页面
  */
-public class WaitPlayFragment extends BaseViewPagerFragment implements View.OnClickListener {
+public class    WaitPlayFragment extends BaseViewPagerFragment implements View.OnClickListener {
 
+    private static final String TAG = "WAIT";
     @Bind(R.id.et_search_center)
     EditText etSearchCenter;
     @Bind(R.id.ll_search_center)
@@ -51,6 +55,8 @@ public class WaitPlayFragment extends BaseViewPagerFragment implements View.OnCl
     private TextView tv_headview;
     private RecyclerView recycleview;
     private List<WaitPlayBean.DataBean.ComingBean> comingList;
+    private RecentRespectBean recentRespectBean;
+    private YugaoBean yugaoBean;
 
     @Override
     public View initView() {
@@ -65,13 +71,13 @@ public class WaitPlayFragment extends BaseViewPagerFragment implements View.OnCl
 
         rlLoadingCommon.setVisibility(View.VISIBLE);
         rlErrorCommon.setVisibility(View.GONE);
-
+        getDataFromNet();
         initListener();
     }
 //延迟加载
     @Override
     protected void lazyLoad() {
-        getDataFromNet();
+
     }
 
     private void initListener() {
@@ -90,7 +96,7 @@ public class WaitPlayFragment extends BaseViewPagerFragment implements View.OnCl
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
+                // Get the sticky information from the topmost view of the screen.
                 View stickyInfoView = recyclerView.findChildViewUnder(
                         tv_headview.getMeasuredWidth() / 2, 5);
 
@@ -98,14 +104,17 @@ public class WaitPlayFragment extends BaseViewPagerFragment implements View.OnCl
                     tv_headview.setText(String.valueOf(stickyInfoView.getContentDescription()));
                 }
 
+                // Get the sticky view's translationY by the first view below the sticky's height.
                 View transInfoView = recyclerView.findChildViewUnder(
                         tv_headview.getMeasuredWidth() / 2, tv_headview.getMeasuredHeight() + 1);
 
                 if (transInfoView != null && transInfoView.getTag() != null) {
                     int transViewStatus = (int) transInfoView.getTag();
                     int dealtY = transInfoView.getTop() - tv_headview.getMeasuredHeight();
+                    // If the first view below the sticky's height scroll off the screen,
+                    // then recovery the sticky view's translationY.
                     if (transViewStatus == StickyExampleAdapter.HAS_STICKY_VIEW) {
-                        if (transInfoView.getTop() > 0) {
+                        if (transInfoView.getTop() > 0) {//设置跟随滑动平移
                             tv_headview.setTranslationY(dealtY);
                         } else {
                             tv_headview.setTranslationY(0);
@@ -140,7 +149,10 @@ public class WaitPlayFragment extends BaseViewPagerFragment implements View.OnCl
                                     Log.e("TAG", "待映页面--Json==" + response);
                                     processJson(response);
                                     recycleview.setLayoutManager(new LinearLayoutManager(mContext));
-                                    recycleview.setAdapter(new StickyExampleAdapter(mContext, getData(), comingList));
+                                    SystemClock.sleep(5000);
+                                    if(comingList!=null&&comingList.size()>0&&recentRespectBean!=null&recentRespectBean.getData().getComing().size()>0&&yugaoBean!=null&&yugaoBean.getData().size()>0) {
+                                        recycleview.setAdapter(new StickyExampleAdapter(mContext, getData(), comingList,recentRespectBean,yugaoBean));
+                                    }
                                 }
                                 break;
                             case 101:
@@ -148,7 +160,78 @@ public class WaitPlayFragment extends BaseViewPagerFragment implements View.OnCl
                         }
                     }
                 });
+
+        //近期最受期待
+        RequestNet
+                .get()
+                .url(ConstantsUtils.HOT_WAIT_RECENT_RESPECT, new CallBack() {
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(getActivity(), "亲,没网了", Toast.LENGTH_SHORT).show();
+//                        rlErrorCommon.setVisibility(View.VISIBLE);
+//                        rlLoadingCommon.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onSuccess(String response, int id) {
+                        switch (id) {
+                            case 100:
+                                if (response != null) {
+//                                    rlLoadingCommon.setVisibility(View.GONE);
+                                    Log.e(TAG, "待映页面近期最受期待--联网成功");
+                                    Log.e(TAG, "待映页面近期最受期待----response======" + response);
+                                    processRespectJson(response);
+                                }
+                                break;
+                            case 101:
+                                break;
+                        }
+                    }
+                });
+
+        //预告片
+        RequestNet
+                .get()
+                .url(ConstantsUtils.HOT_WAIT_YUGAO, new CallBack() {
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(getActivity(), "亲,没网了", Toast.LENGTH_SHORT).show();
+//                        rlErrorCommon.setVisibility(View.VISIBLE);
+//                        rlLoadingCommon.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onSuccess(String response, int id) {
+                        switch (id) {
+                            case 100:
+                                if (response != null) {
+//                                    rlLoadingCommon.setVisibility(View.GONE);
+                                    Log.e(TAG, "预告--联网成功");
+                                    Log.e(TAG, "预告----response======" + response);
+                                    processYugaoJson(response);
+                                }
+                                break;
+                            case 101:
+                                break;
+                        }
+                    }
+                });
+
     }
+
+    private void processYugaoJson(String json) {
+        Gson gson = new Gson();
+        yugaoBean = gson.fromJson(json, YugaoBean.class);
+        Log.e(TAG, "预告"+ yugaoBean.getData().size()+"");
+    }
+
+    private void processRespectJson(String json) {
+        Gson gson = new Gson();
+        recentRespectBean = gson.fromJson(json, RecentRespectBean.class);
+        //近期最受期待的集合数据
+        Log.e(TAG, "recentRespectBean==" + recentRespectBean.getData().getComing().size());
+    }
+
 
     public List<StickyExampleBean> getData() {
         List<StickyExampleBean> stickyExampleBeans = new ArrayList<>();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="200dp"
-    android:layout_height="100dp">
+    android:layout_height="85dp">
 
         <LinearLayout
             android:id="@+id/ll_left"
@@ -26,22 +26,22 @@
                 android:text="你的名字"
                 android:textSize="12sp" />
         </LinearLayout>
-        <ImageView
+          <ImageView
             android:id="@+id/iv_title_icon"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:paddingTop="10dp"
             android:src="@android:mipmap/sym_def_app_icon"
             android:layout_marginLeft="70dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="20dp"
             android:layout_toRightOf="@id/ll_left"/>
     <ImageView
         android:id="@+id/iv_title_icon2"
         android:layout_width="wrap_content"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:src="@drawable/search"
-        android:layout_marginLeft="130dp"
+        android:layout_marginLeft="115dp"
         android:layout_marginTop="20dp" />
     <TextView
         android:layout_width="match_parent"

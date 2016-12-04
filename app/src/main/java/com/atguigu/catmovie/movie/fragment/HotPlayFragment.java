@@ -74,7 +74,7 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
         rl_error_common.setVisibility(View.GONE);
         materialRefreshLayout.setVisibility(View.GONE);
 
-
+        getDataFromServer();
 
 
         initLister();
@@ -82,7 +82,7 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
         //延迟加载
     @Override
     protected void lazyLoad() {
-        getDataFromServer();
+
     }
 
     private void setRefresh() {

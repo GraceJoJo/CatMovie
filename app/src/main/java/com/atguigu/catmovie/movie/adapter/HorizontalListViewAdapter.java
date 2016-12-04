@@ -55,13 +55,13 @@ public class HorizontalListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        if(convertView==null) {
-            convertView = View.inflate(context,R.layout.horizontallistview_item, null);
+//        if(convertView==null) {
+            convertView = View.inflate(context,R.layout.horizontallistview_item_tag, null);
             holder.textview = (TextView) convertView.findViewById(R.id.textview);
-            convertView.setTag(holder);
-        }else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+//            convertView.setTag(holder);
+//        }else {
+//            holder = (ViewHolder) convertView.getTag();
+//        }
         Log.e("TAG", "标签position===" + position);
 
         //设置第一个位置 显示标题
