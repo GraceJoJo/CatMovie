@@ -1,30 +1,22 @@
 package com.atguigu.catmovie.login.fragment;
 
-import android.graphics.Color;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.TextView;
 
+import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseFragment;
-import com.atguigu.catmovie.utils.DensityUtil;
 
 /**
  * Created by Administrator on 2016/11/30.
  */
 public class LoginByPhoneFragment extends BaseFragment {
-    private TextView textView;
     @Override
     public View initView() {
-//        View.inflate(mContext, R.layout.fragment_me,null);
-        textView = new TextView(mContext);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(Color.RED);
-        textView.setTextSize(DensityUtil.dip2px(mContext, 40));
-        return textView;
+        View view = View.inflate(mContext, R.layout.fragment_login_byphone, null);
+
+        return view;
     }
     @Override
     public void initData() {
-        textView.setText("手机号码登录");
     }
 
 }
