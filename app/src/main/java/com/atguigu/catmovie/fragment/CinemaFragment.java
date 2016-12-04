@@ -1,22 +1,21 @@
 package com.atguigu.catmovie.fragment;
 
 import android.content.Context;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.atguigu.catmovie.MainActivity;
 import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseFragment;
 import com.atguigu.catmovie.cinema.CinemaBean;
 import com.atguigu.catmovie.net.CallBack;
 import com.atguigu.catmovie.net.RequestNet;
 import com.atguigu.catmovie.utils.ConstantsUtils;
-import com.flyco.tablayout.SlidingTabLayout;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
@@ -39,56 +38,45 @@ public class CinemaFragment extends BaseFragment {
     TextView tvCinemaHeadText;
     @Bind(R.id.tv_cinema_login)
     TextView tvCinemaLogin;
-    @Bind(R.id.tv_select_city)
-    TextView tvSelectCity;
-    @Bind(R.id.rl_select_city)
-    RelativeLayout rlSelectCity;
-    @Bind(R.id.text_cinema_center)
-    TextView textCinemaCenter;
-    @Bind(R.id.tl_10)
-    SlidingTabLayout tl10;
-    @Bind(R.id.slidelayout)
-    LinearLayout slidelayout;
-    @Bind(R.id.iv_select_city)
-    ImageView ivSelectCity;
-    @Bind(R.id.ll_cinema_select)
-    LinearLayout llCinemaSelect;
-    @Bind(R.id.iv_search_icon)
-    ImageView ivSearchIcon;
-    @Bind(R.id.ll_cinema_search)
-    LinearLayout llCinemaSearch;
+
     @Bind(R.id.listview_cinema)
     ListView listviewCinema;
     private Banner banner;
     private List<String> imageurls;
     private CinemaBean cinemaBean;
+    private LocalBroadcastManager mLBM;
+    private TextView curCity;
 
     @Override
     public View initView() {
         View view = View.inflate(mContext, R.layout.fragment_cinema, null);
         ButterKnife.bind(this, view);
         banner = (Banner) view.findViewById(R.id.banner_cinema);
-
+        /**
+         * 当前所选的城市
+         */
+        curCity = (TextView) view.findViewById(R.id.tv_select_city);
         return view;
     }
 
     @Override
     public void initData() {
-        slidelayout.setVisibility(View.GONE);
-        rlSelectCity.setVisibility(View.VISIBLE);
-        textCinemaCenter.setVisibility(View.VISIBLE);
-        llCinemaSelect.setVisibility(View.VISIBLE);
-        llCinemaSearch.setVisibility(View.VISIBLE);
-        ivSelectCity.setVisibility(View.VISIBLE);
-        ivSearchIcon.setVisibility(View.VISIBLE);
         String url = "http://p0.meituan.net/mmc/34df9f37cdbb47e7c701582697d2566254352.jpg";
         imageurls = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             imageurls.add(url);
         }
+
         setBannerStyle();
 
+        initListener();
+
         getDataFromNet();
+    }
+
+    private void initListener() {
+
+
     }
 
     private void getDataFromNet() {
@@ -163,4 +151,30 @@ public class CinemaFragment extends BaseFragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Log.e(TAG, "onHiddenChanged" + hidden);
+        if(!hidden) {
+            isFragmentVisible();
+        }
+    }
+
+    private void isFragmentVisible() {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getLlCommonTitl().setVisibility(View.VISIBLE);
+        activity.getLlCinemaSearch().setVisibility(View.INVISIBLE);
+        activity.getLlCinemaSelect().setVisibility(View.INVISIBLE);
+        activity.getSlidelayout().setVisibility(View.GONE);
+        activity.getTl10().setVisibility(View.GONE);
+        activity.getTextCinemaCenter().setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isFragmentVisible();
+        Log.e(TAG, "onResume");
+    }
+
 }

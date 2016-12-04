@@ -1,17 +1,20 @@
 package com.atguigu.catmovie.fragment;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.atguigu.catmovie.MainActivity;
 import com.atguigu.catmovie.base.BaseFragment;
 import com.atguigu.catmovie.utils.DensityUtil;
 
 /**
- * Created by Administrator on 2016/11/30.
+ * 发现页面
  */
 public class FindFragment extends BaseFragment {
+    private static final String TAG = "find";
     private TextView textView;
     @Override
     public View initView() {
@@ -26,5 +29,24 @@ public class FindFragment extends BaseFragment {
     public void initData() {
         textView.setText("发现");
     }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Log.e(TAG, "onHiddenChanged" + hidden);
+        if(!hidden) {
+            isFragmentVisible();
+        }
+    }
 
+    private void isFragmentVisible() {
+        MainActivity activity = (MainActivity) getActivity();
+      activity.getLlCommonTitl().setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isFragmentVisible();
+        Log.e(TAG, "onResume");
+    }
 }
