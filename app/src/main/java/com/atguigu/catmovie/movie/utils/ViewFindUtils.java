@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.movie;
+package com.atguigu.catmovie.movie.utils;
 
 import android.util.SparseArray;
 import android.view.View;

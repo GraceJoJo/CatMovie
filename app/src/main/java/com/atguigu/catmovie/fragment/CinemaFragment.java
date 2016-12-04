@@ -1,31 +1,166 @@
 package com.atguigu.catmovie.fragment;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseFragment;
-import com.atguigu.catmovie.utils.DensityUtil;
+import com.atguigu.catmovie.cinema.CinemaBean;
+import com.atguigu.catmovie.net.CallBack;
+import com.atguigu.catmovie.net.RequestNet;
+import com.atguigu.catmovie.utils.ConstantsUtils;
+import com.flyco.tablayout.SlidingTabLayout;
+import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+import com.youth.banner.loader.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2016/11/30.
+ * 影院的bean类
  */
 public class CinemaFragment extends BaseFragment {
-    private TextView textView;
+    private static final String TAG = "cinema";
+    @Bind(R.id.tv_cinema_head_text)
+    TextView tvCinemaHeadText;
+    @Bind(R.id.tv_cinema_login)
+    TextView tvCinemaLogin;
+    @Bind(R.id.tv_select_city)
+    TextView tvSelectCity;
+    @Bind(R.id.rl_select_city)
+    RelativeLayout rlSelectCity;
+    @Bind(R.id.text_cinema_center)
+    TextView textCinemaCenter;
+    @Bind(R.id.tl_10)
+    SlidingTabLayout tl10;
+    @Bind(R.id.slidelayout)
+    LinearLayout slidelayout;
+    @Bind(R.id.iv_select_city)
+    ImageView ivSelectCity;
+    @Bind(R.id.ll_cinema_select)
+    LinearLayout llCinemaSelect;
+    @Bind(R.id.iv_search_icon)
+    ImageView ivSearchIcon;
+    @Bind(R.id.ll_cinema_search)
+    LinearLayout llCinemaSearch;
+    @Bind(R.id.listview_cinema)
+    ListView listviewCinema;
+    private Banner banner;
+    private List<String> imageurls;
+    private CinemaBean cinemaBean;
+
     @Override
     public View initView() {
-//        View.inflate(mContext, R.layout.fragment_me,null);
-        Log.e("TAG", "initView");
-        textView = new TextView(mContext);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(Color.RED);
-        textView.setTextSize(DensityUtil.dip2px(mContext, 40));
-        return textView;
+        View view = View.inflate(mContext, R.layout.fragment_cinema, null);
+        ButterKnife.bind(this, view);
+        banner = (Banner) view.findViewById(R.id.banner_cinema);
+
+        return view;
     }
+
     @Override
     public void initData() {
-        textView.setText("影院");
+        slidelayout.setVisibility(View.GONE);
+        rlSelectCity.setVisibility(View.VISIBLE);
+        textCinemaCenter.setVisibility(View.VISIBLE);
+        llCinemaSelect.setVisibility(View.VISIBLE);
+        llCinemaSearch.setVisibility(View.VISIBLE);
+        ivSelectCity.setVisibility(View.VISIBLE);
+        ivSearchIcon.setVisibility(View.VISIBLE);
+        String url = "http://p0.meituan.net/mmc/34df9f37cdbb47e7c701582697d2566254352.jpg";
+        imageurls = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            imageurls.add(url);
+        }
+        setBannerStyle();
+
+        getDataFromNet();
+    }
+
+    private void getDataFromNet() {
+        RequestNet
+                .get()
+                .url(ConstantsUtils.CINIMA_URL, new CallBack() {
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(getActivity(), "亲,没网了", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onSuccess(String response, int id) {
+                        switch (id) {
+                            case 100:
+                                if (response != null) {
+//                                    rl_loading_common.setVisibility(View.GONE);
+                                    Log.e(TAG, "影院---联网成功--" + response);
+                                    parseJson(response);
+
+                                    if(cinemaBean!=null) {
+//                                        listviewCinema.setAdapter(new CinemaAdapter(cinemaBean,getActivity()));
+                                    }
+                                }
+                                break;
+                            case 101:
+                                break;
+                        }
+                    }
+                });
+    }
+
+    private void parseJson(String json) {
+        Gson gson = new Gson();
+        cinemaBean = gson.fromJson(json, CinemaBean.class);
+        Log.e(TAG, cinemaBean.getData().get东城区().size()+"");
+    }
+
+    private void setBannerStyle() {
+        //（1）设置banner的样式
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
+//        //（2）设置图片加载器
+        banner.setImageLoader(new GlideImageLoader());
+        //（4）设置图片集合与banner关联
+        banner.setImages(imageurls);
+        //（5）设置动画效果
+        banner.setBannerAnimation(Transformer.Default);
+        //（7）设置自动轮播
+        banner.isAutoPlay(true);
+        //（8）设置轮播时间
+        banner.setDelayTime(2000);
+        //（9）设置指示器位置(当banner模式中有指示器时)
+        banner.setIndicatorGravity(BannerConfig.RIGHT);
+        //（10）banner设置方法全部调用完毕时最后调用
+        banner.start();
+
+
+    }
+
+
+    public class GlideImageLoader extends ImageLoader {
+        @Override
+        public void displayImage(Context context, Object path, ImageView imageView) {
+            //使用Picasso加载图片
+            Picasso.with(context).load((String) path).into(imageView);
+        }
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

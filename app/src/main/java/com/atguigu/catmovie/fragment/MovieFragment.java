@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,7 +14,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,20 +27,41 @@ import com.atguigu.catmovie.MyApplication;
 import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseFragment;
 import com.atguigu.catmovie.cityindex.citylist.CityList;
-import com.atguigu.catmovie.movie.ViewFindUtils;
 import com.atguigu.catmovie.movie.fragment.FindPlayFragment;
 import com.atguigu.catmovie.movie.fragment.HotPlayFragment;
 import com.atguigu.catmovie.movie.fragment.WaitPlayFragment;
+import com.atguigu.catmovie.movie.utils.ViewFindUtils;
 import com.atguigu.catmovie.utils.SpUtil;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * 电影页面---展示数据---选择城市功能---搜索影片功能
  */
-public class MovieFragment extends BaseFragment  implements OnTabSelectListener {
+public class MovieFragment extends BaseFragment implements OnTabSelectListener {
+    @Bind(R.id.tv_select_city)
+    TextView tvSelectCity;
+    @Bind(R.id.rl_select_city)
+    RelativeLayout rlSelectCity;
+    @Bind(R.id.text_cinema_center)
+    TextView textCinemaCenter;
+    @Bind(R.id.tl_10)
+    SlidingTabLayout tl10;
+    @Bind(R.id.slidelayout)
+    LinearLayout slidelayout;
+    @Bind(R.id.iv_select_city)
+    ImageView ivSelectCity;
+    @Bind(R.id.ll_cinema_select)
+    LinearLayout llCinemaSelect;
+    @Bind(R.id.iv_search_icon)
+    ImageView ivSearchIcon;
+    @Bind(R.id.ll_cinema_search)
+    LinearLayout llCinemaSearch;
     private Context mContext;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private final String[] mTitles = {
@@ -48,7 +74,7 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
     private FindPlayFragment findPlayFragment;
     private RelativeLayout rl_select_city;
     private TextView curCity;
-    LocalBroadcastManager mLBM ;
+    LocalBroadcastManager mLBM;
     private ViewPager vp;
 
     @Override
@@ -65,8 +91,14 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
         initFragment();
         return view;
     }
+
     @Override
     public void initData() {
+        slidelayout.setVisibility(View.VISIBLE);
+        rlSelectCity.setVisibility(View.VISIBLE);
+        textCinemaCenter.setVisibility(View.GONE);
+        llCinemaSelect.setVisibility(View.INVISIBLE);
+        llCinemaSearch.setVisibility(View.INVISIBLE);
         /**  City---1.判断之前选择的城市：SP中读取
          *          //判断是否需要切换城市
          */
@@ -75,11 +107,11 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
             @Override
             public void onReceive(Context context, Intent intent) {
                 String firstLocation = intent.getStringExtra("firstLocation");
-                if(!TextUtils.isEmpty(firstLocation)) {
+                if (!TextUtils.isEmpty(firstLocation)) {
                     curCity.setText(firstLocation);
                 }
             }
-        },new IntentFilter("isFrist"));
+        }, new IntentFilter("isFrist"));
         isSwichCity();
         //设置集成FlocoLayout
         setStyle();
@@ -98,41 +130,41 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
         final String city = SpUtil.getInstance(MyApplication.getmContext()).getString("city", "");
         //定位获得的城市---第二次进来时进行判断是否需要切换
         final String location_city = SpUtil.getInstance(MyApplication.getmContext()).getString("location_city", "");
-        if(!TextUtils.isEmpty(city)) {
-            if(!TextUtils.isEmpty(location_city)&&!location_city.equals(city)) {
+        if (!TextUtils.isEmpty(city)) {
+            if (!TextUtils.isEmpty(location_city) && !location_city.equals(city)) {
                 new AlertDialog.Builder(getActivity())
-                            .setTitle("检测到您所在城市为" + location_city + ",是否需要切换")
-                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    curCity.setText(location_city);
-                                    SpUtil.getInstance(MyApplication.getmContext()).save("city",location_city);
-                                }
-                            })
-                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    curCity.setText(city);
-                                }
-                            })
-                            .show();
+                        .setTitle("检测到您所在城市为" + location_city + ",是否需要切换")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                curCity.setText(location_city);
+                                SpUtil.getInstance(MyApplication.getmContext()).save("city", location_city);
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                curCity.setText(city);
+                            }
+                        })
+                        .show();
             }
             curCity.setText(location_city);
-        }else {
+        } else {
             //默认设置"长沙"
             curCity.setText("长沙");
         }
     }
 
     private void initListener() {
-       rl_select_city.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Toast.makeText(getActivity(), "选择城市", Toast.LENGTH_SHORT).show();
-               Intent intent = new Intent(getActivity(), CityList.class);
-               startActivityForResult(intent, 1);
-           }
-       });
+        rl_select_city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "选择城市", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), CityList.class);
+                startActivityForResult(intent, 1);
+            }
+        });
 
 
     }
@@ -165,6 +197,7 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
         vp.setCurrentItem(0);
 
     }
+
     @Override
     public void onTabSelect(int position) {
         Toast.makeText(mContext, "onTabSelect&position--->" + position, Toast.LENGTH_SHORT).show();
@@ -173,6 +206,20 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
     @Override
     public void onTabReselect(int position) {
         Toast.makeText(mContext, "onTabReselect&position--->" + position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -198,6 +245,7 @@ public class MovieFragment extends BaseFragment  implements OnTabSelectListener 
 
     /**
      * 处理选择城市的返回结果
+     *
      * @param requestCode
      * @param resultCode
      * @param data

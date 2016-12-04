@@ -10,6 +10,8 @@
     <color name="color_black_light">#403d3d</color>
     <color name="color_black_light2">#494949</color>
     <color name="color_red_light2">#ef6d6d</color>
+    <color name="cinema_text_color_light">#8E8E8E</color>
+    <color name="cinema_text_color_dark">#373737</color>
     <color name="color_movietype_bg">#6d99b4</color>
     <!--<color name="title_bg_common">#D43137"</color>-->
 

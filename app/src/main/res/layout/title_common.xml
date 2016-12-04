@@ -26,11 +26,13 @@
         <ImageView
             android:layout_width="16dp"
             android:layout_height="match_parent"
+            android:paddingLeft="3dp"
             android:layout_toRightOf="@+id/tv_select_city"
             android:src="@drawable/show_city01" />
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/text_cinema_center"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
@@ -43,6 +45,7 @@
         android:visibility="gone" />
 
     <LinearLayout
+        android:id="@+id/slidelayout"
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_gravity="center_vertical"
