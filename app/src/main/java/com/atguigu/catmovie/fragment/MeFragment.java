@@ -1,12 +1,15 @@
 package com.atguigu.catmovie.fragment;
 
 import android.content.Intent;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.atguigu.catmovie.MainActivity;
 import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseFragment;
 import com.atguigu.catmovie.login.LoginActivity;
@@ -19,6 +22,7 @@ import butterknife.ButterKnife;
  */
 public class MeFragment extends BaseFragment implements View.OnClickListener {
 
+    private static final String TAG = "me";
     @Bind(R.id.iv_user_icon)
     ImageView ivUserIcon;
     @Bind(R.id.tv_login_now)
@@ -66,6 +70,18 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     private void initListener() {
         tvLoginNow.setOnClickListener(this);
+        tvLoginNow.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(MotionEvent.ACTION_UP==event.getAction()) {
+                    isFragmentVisible();
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -73,8 +89,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_login_now:
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+
                 break;
         }
     }
@@ -82,5 +97,34 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Log.e(TAG, "onHiddenChanged" + hidden);
+        if(!hidden) {
+            isFragmentVisible();
+        }
+    }
+
+    private void isFragmentVisible() {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getLlCommonTitl().setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isFragmentVisible();
+        Log.e(TAG, "onResume");
+    }
+
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isFragmentVisible();
+        Log.e(TAG, "onStop");
     }
 }

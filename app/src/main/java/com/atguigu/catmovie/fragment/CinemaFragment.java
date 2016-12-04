@@ -97,7 +97,7 @@ public class CinemaFragment extends BaseFragment {
                                     Log.e(TAG, "影院---联网成功--" + response);
                                     parseJson(response);
 
-                                    if(cinemaBean!=null) {
+                                    if (cinemaBean != null) {
 //                                        listviewCinema.setAdapter(new CinemaAdapter(cinemaBean,getActivity()));
                                     }
                                 }
@@ -177,4 +177,18 @@ public class CinemaFragment extends BaseFragment {
         Log.e(TAG, "onResume");
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        isFragmentVisible();
+        Log.e(TAG, "onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isFragmentVisible();
+        Log.e(TAG, "onStop");
+    }
 }
+

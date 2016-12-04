@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:id="@+id/ll_common_titl"
+    android:visibility="gone"
     android:background="#D43137">
 
     <RelativeLayout

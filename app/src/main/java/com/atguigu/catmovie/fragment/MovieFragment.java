@@ -199,4 +199,16 @@ public class MovieFragment extends BaseFragment implements OnTabSelectListener {
         isFragmentVisible();
         Log.e(TAG, "onResume");
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop");
+    }
 }

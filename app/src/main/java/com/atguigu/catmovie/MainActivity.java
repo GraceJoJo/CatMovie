@@ -292,18 +292,18 @@ public class MainActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         Log.e(TAG, "onResume");
-        llCommonTitl.setVisibility(View.VISIBLE);
+//        llCommonTitl.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        llCommonTitl.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        llCommonTitl.setVisibility(View.VISIBLE);
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+////        llCommonTitl.setVisibility(View.VISIBLE);
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+////        llCommonTitl.setVisibility(View.VISIBLE);
+//    }
 }
