@@ -151,6 +151,7 @@
                         android:src="@drawable/a8l" />
 
                     <ImageView
+                        android:id="@+id/iv_xinlang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -184,6 +185,7 @@
                         android:src="@drawable/a8l" />
 
                     <ImageView
+                        android:id="@+id/iv_weixin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -216,6 +218,7 @@
                         android:src="@drawable/a8l" />
 
                     <ImageView
+                        android:id="@+id/iv_qq"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -248,6 +251,7 @@
                         android:src="@drawable/a8l" />
 
                     <ImageView
+                        android:id="@+id/iv_baidu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"

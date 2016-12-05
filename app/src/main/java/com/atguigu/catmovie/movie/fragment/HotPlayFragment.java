@@ -1,8 +1,6 @@
 package com.atguigu.catmovie.movie.fragment;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -51,28 +49,7 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
     private List<HotPlayBean.DataBean.MoviesBean> movieList;
     private TextView click_refresh;
     private MaterialRefreshLayout materialRefreshLayout;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-//                case 1:
-//                    if (movieList != null && movieList.size() > 0) {
-//                        Log.e(TAG, "222222222222222222");
-//
-//                    } else {
-//                        Toast.makeText(getActivity(), "亲，网络出错了", Toast.LENGTH_SHORT).show();
-//                    }
-                case 2:
-                    if (banner != null && imageurls.size() > 0) {
-                        setBannerStyle();
-                    }
-                    break;
-            }
 
-
-        }
-    };
 
     @Override
     public View initView() {
@@ -142,7 +119,9 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
                                     rl_loading_common.setVisibility(View.GONE);
                                     Log.e(TAG, "hot-图片--联网成功");
                                     processImageJson(response);
-                                    handler.sendEmptyMessageDelayed(2, 2000);
+                                    if(imageurls!=null&&imageurls.size()>0) {
+                                        setBannerStyle();
+                                    }
 
                                 }
                                 break;
@@ -170,7 +149,8 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
                     @Override
                     public void run() {
                         materialRefreshLayout.finishRefresh();
-//                        getDataFromNet();
+//                       getImageFromNet();
+                        getDataFromServer();
                     }
                 }, 3000);
 
@@ -229,7 +209,6 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
                                     //解析数据
                                     processListViewJson(response);
                                     //设置适配器显示
-//                                    handler.sendEmptyMessageDelayed(1, 2000);
                                     listviewHot.setVisibility(View.VISIBLE);
                                     listviewHot.setAdapter(new HotPlayFragmentAdapter(mContext, movieList));
                                 }
@@ -259,9 +238,9 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
         for (int i = 0; i < datas.size(); i++) {
             imageurls.add(datas.get(i).getImgUrl());
         }
-        if (advertiseImageBean != null) {
-            SpUtil.getInstance(MyApplication.getmContext()).save("hot_images", json);
-        }
+//        if (advertiseImageBean != null) {
+//            SpUtil.getInstance(MyApplication.getmContext()).save("hot_images", json);
+//        }
     }
 
     private void setBannerStyle() {
@@ -272,7 +251,7 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
         //（4）设置图片集合与banner关联
         banner.setImages(imageurls);
         //（5）设置动画效果
-        banner.setBannerAnimation(Transformer.CubeOut);
+        banner.setBannerAnimation(Transformer.Default);
         //（7）设置自动轮播
         banner.isAutoPlay(true);
         //（8）设置轮播时间
@@ -304,22 +283,4 @@ public class HotPlayFragment extends BaseViewPagerFragment implements View.OnCli
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        handler.sendEmptyMessageDelayed(1, 2000);
-        handler.sendEmptyMessageDelayed(2, 2000);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        handler.removeCallbacksAndMessages(null);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        handler.removeCallbacksAndMessages(null);
-    }
 }

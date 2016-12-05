@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,7 +13,9 @@ import android.widget.Toast;
 import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseViewPagerFragment;
 import com.atguigu.catmovie.movie.adapter.AllprizeAdapter;
-import com.atguigu.catmovie.movie.adapter.HorizontalListViewAdapter;
+import com.atguigu.catmovie.movie.adapter.HorizontalListViewAdapter1;
+import com.atguigu.catmovie.movie.adapter.HorizontalListViewAdapter2;
+import com.atguigu.catmovie.movie.adapter.HorizontalListViewAdapter3;
 import com.atguigu.catmovie.movie.adapter.PrizeAdapter;
 import com.atguigu.catmovie.movie.bean.AllPrizeBean;
 import com.atguigu.catmovie.movie.bean.PrizeBean;
@@ -29,9 +32,9 @@ import java.util.List;
  * 找片--页面--Fragment
  */
 public class FindPlayFragment extends BaseViewPagerFragment implements GestureDetector.OnGestureListener, View.OnClickListener {
-    private HorizontalListViewAdapter hlva1;
-    private HorizontalListViewAdapter hlva2;
-    private HorizontalListViewAdapter hlva3;
+    private HorizontalListViewAdapter1 hlva1Adapter;
+    private HorizontalListViewAdapter2 hlva2Adapter;
+    private HorizontalListViewAdapter3 hlva3Adapter;
     private HorizontalListView hlv1;
     private HorizontalListView hlv2;
     private HorizontalListView hlv3;
@@ -70,7 +73,37 @@ public class FindPlayFragment extends BaseViewPagerFragment implements GestureDe
     @Override
     public void initData() {
         getDataFromNet();
+        hlv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(mContext, position + "", Toast.LENGTH_SHORT).show();
+                hlva1Adapter.setPosition(position);
+            }
+        });
+        hlv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(mContext, position + "", Toast.LENGTH_SHORT).show();
+                hlva2Adapter.setPosition(position);
+            }
+        });
+        hlv3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(mContext, position + "", Toast.LENGTH_SHORT).show();
+                hlva3Adapter.setPosition(position);
+            }
+        });
+
+        hlva1Adapter = new HorizontalListViewAdapter1(getActivity(),"cat");
+        hlva2Adapter = new HorizontalListViewAdapter2(getActivity(),"source");
+        hlva3Adapter = new HorizontalListViewAdapter3(getActivity(), "year");
+        hlv1.setAdapter(hlva1Adapter);
+        hlv2.setAdapter(hlva2Adapter);
+        hlv3.setAdapter(hlva3Adapter);
+
     }
+
     //延迟加载
     @Override
     protected void lazyLoad() {
@@ -99,17 +132,14 @@ public class FindPlayFragment extends BaseViewPagerFragment implements GestureDe
 //                                    rl_loading_common.setVisibility(View.GONE);
 //                                    Log.e("TAG", "联网成功");
                                     processJson(response);
-                                    if (tagBean.getData().size() > 0 && tagBean != null) {
-                                        hlva1 = new HorizontalListViewAdapter(getActivity(), tagList1, type1);
-                                        hlva2 = new HorizontalListViewAdapter(getActivity(), tagList2, type2);
-                                        hlva3 = new HorizontalListViewAdapter(getActivity(), tagList3, type3);
-                                        hlva1.notifyDataSetChanged();
-                                        hlva2.notifyDataSetChanged();
-                                        hlva3.notifyDataSetChanged();
-                                        hlv1.setAdapter(hlva1);
-                                        hlv2.setAdapter(hlva2);
-                                        hlv3.setAdapter(hlva3);
-                                    }
+//
+//                                    hlva1Adapter = new HorizontalListViewAdapter1(getActivity(),tagList1, "cat");
+//                                    hlva2Adapter = new HorizontalListViewAdapter1(getActivity(),tagList2, "source");
+//                                    hlva3Adapter = new HorizontalListViewAdapter1(getActivity(),tagList3, "year");
+//                                    hlv1.setAdapter(hlva1Adapter);
+//                                    hlv2.setAdapter(hlva2Adapter);
+//                                    hlv3.setAdapter(hlva3Adapter);
+                                    refresh();
                                 }
                                 break;
                             case 101:
@@ -171,6 +201,13 @@ public class FindPlayFragment extends BaseViewPagerFragment implements GestureDe
 
     }
 
+    //
+    private void refresh() {
+        hlva1Adapter.refresh(tagList1);
+        hlva2Adapter.refresh(tagList2);
+        hlva3Adapter.refresh(tagList3);
+    }
+
     /**
      * 全部奖项--数据解析
      *
@@ -198,11 +235,14 @@ public class FindPlayFragment extends BaseViewPagerFragment implements GestureDe
         type1 = tagBean.getData().get(0).getTagTypeName();
         type2 = tagBean.getData().get(1).getTagTypeName();
         type3 = tagBean.getData().get(2).getTagTypeName();
+
+
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.click_refresh :
+            case R.id.click_refresh:
                 //错误页面的点击重新刷新请求网络
                 getDataFromNet();
                 rl_error_common.setVisibility(View.GONE);
@@ -210,6 +250,7 @@ public class FindPlayFragment extends BaseViewPagerFragment implements GestureDe
                 break;
         }
     }
+
     @Override
     public boolean onDown(MotionEvent e) {
         return false;
