@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/search_center_common"></include>
+
+
+    <com.cjj.MaterialRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:atguigu="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/materialrefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        atguigu:isLoadMore="true"
+        atguigu:overlay="true"
+        atguigu:progress_colors="@array/material_colors"
+        atguigu:progress_size_type="normal"
+        atguigu:wave_color="#90ffffff"
+        atguigu:wave_height_type="normal"
+        atguigu:wave_show="true">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/find_recycleview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    </com.cjj.MaterialRefreshLayout>
+</LinearLayout>
