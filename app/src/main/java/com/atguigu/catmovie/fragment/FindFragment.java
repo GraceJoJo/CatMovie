@@ -205,7 +205,6 @@ public class FindFragment extends BaseFragment {
         isFragmentVisible();
         Log.e(TAG, "onResume");
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

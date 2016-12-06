@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -141,6 +140,7 @@ public class MainActivity extends FragmentActivity {
                 Toast.makeText(MainActivity.this, "选择城市", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, CityList.class);
                 startActivityForResult(intent, 1);
+                llCommonTitl.setVisibility(View.VISIBLE);
             }
         });
 
@@ -286,24 +286,4 @@ public class MainActivity extends FragmentActivity {
     public LinearLayout getLlCommonTitl() {
         return llCommonTitl;
     }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e(TAG, "onResume");
-//        llCommonTitl.setVisibility(View.VISIBLE);
-    }
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-////        llCommonTitl.setVisibility(View.VISIBLE);
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-////        llCommonTitl.setVisibility(View.VISIBLE);
-//    }
 }

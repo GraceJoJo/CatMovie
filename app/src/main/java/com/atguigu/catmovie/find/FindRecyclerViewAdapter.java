@@ -1,15 +1,20 @@
 package com.atguigu.catmovie.find;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.atguigu.catmovie.R;
+import com.atguigu.catmovie.find.activity.FilmFastActivity;
+import com.atguigu.catmovie.find.activity.PiaoFangActivity;
+import com.atguigu.catmovie.find.activity.TopicActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -151,6 +156,39 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
             HeadGridViewAdapter headGridViewAdapter = new HeadGridViewAdapter(mContext);
             find_gridview.setAdapter(headGridViewAdapter);
             headGridViewAdapter.refresh(headDatas);
+            
+            find_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if(position==0) {
+                        LoadTopicWebView();
+                    }else if(position==1) {
+                        LoadFilmWebView();
+                    }else if(position==2) {
+                        /**
+                         * 周边商城
+                         */
+
+                    }else if(position==3) {
+                        LoadWebView();
+                    }
+                }
+            });
+        }
+
+        private void LoadFilmWebView() {
+            Intent intent = new Intent(mContext,FilmFastActivity.class);
+            mContext.startActivity(intent);
+        }
+
+        private void LoadTopicWebView() {
+            Intent intent = new Intent(mContext,TopicActivity.class);
+            mContext.startActivity(intent);
+        }
+
+        private void LoadWebView() {
+            Intent intent = new Intent(mContext,PiaoFangActivity.class);
+            mContext.startActivity(intent);
         }
     }
 

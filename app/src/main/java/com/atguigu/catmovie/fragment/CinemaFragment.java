@@ -6,9 +6,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.atguigu.catmovie.MainActivity;
 import com.atguigu.catmovie.R;
@@ -16,10 +16,8 @@ import com.atguigu.catmovie.base.BaseFragment;
 import com.atguigu.catmovie.cinema.adapter.CinemaAdapter;
 import com.atguigu.catmovie.cinema.bean.CinemaBean;
 import com.atguigu.catmovie.cinema.bean.ItemBean;
-import com.atguigu.catmovie.net.CallBack;
-import com.atguigu.catmovie.net.RequestNet;
-import com.atguigu.catmovie.utils.ConstantsUtils;
-import com.google.gson.Gson;
+import com.atguigu.catmovie.cinema.utils.CitydatasUtil;
+import com.atguigu.catmovie.cinema.view.MenuPopup;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -40,7 +38,7 @@ public class CinemaFragment extends BaseFragment {
     @Bind(R.id.listview_cinema)
     ListView listviewCinema;
     @Bind(R.id.tv_detail_attr)//下面悬浮的TextView
-    TextView tv_detail_attr;
+            TextView tv_detail_attr;
     private Banner banner;
     private List<String> imageurls;
     private CinemaBean cinemaBean;
@@ -48,11 +46,20 @@ public class CinemaFragment extends BaseFragment {
     private TextView curCity;
     private CinemaAdapter adapter;
     private List<ItemBean> datas;
+    private LinearLayout ll_cinema_search;//搜索
+    private LinearLayout ll_cinema_select;//城市筛选
+    private MenuPopup mMenuPopup;
+    private ListView popup_listview;
+    private List<String> cities;
+    private CitydatasUtil citydatasUtil;
+
     @Override
     public View initView() {
         View view = View.inflate(mContext, R.layout.fragment_cinema, null);
+        ll_cinema_search = (LinearLayout) view.findViewById(R.id.ll_cinema_search);
+        ll_cinema_select = (LinearLayout) view.findViewById(R.id.ll_cinema_select);
         ButterKnife.bind(this, view);
-        View headView = View.inflate(mContext, R.layout.layout_cinema_headview,null);
+        View headView = View.inflate(mContext, R.layout.layout_cinema_headview, null);
         TextView tv_cinema_head_text = (TextView) headView.findViewById(R.id.tv_cinema_head_text);
         TextView tv_cinema_login = (TextView) headView.findViewById(R.id.tv_cinema_login);//登陆
         banner = (Banner) headView.findViewById(R.id.banner_cinema);
@@ -61,8 +68,6 @@ public class CinemaFragment extends BaseFragment {
          */
         curCity = (TextView) view.findViewById(R.id.tv_select_city);
         listviewCinema.addHeaderView(headView);
-
-
         return view;
     }
 
@@ -80,9 +85,14 @@ public class CinemaFragment extends BaseFragment {
         setBannerStyle();
 
 
-        getDataFromNet();
+//        getDataFromNet();
+
         setAdapter();
+
+        citydatasUtil = new CitydatasUtil(getActivity(), adapter);
         initListener();
+
+
     }
 
 
@@ -91,18 +101,90 @@ public class CinemaFragment extends BaseFragment {
         listviewCinema.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction()==MotionEvent.ACTION_DOWN) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     tv_detail_attr.setVisibility(View.INVISIBLE);
                     return false;
-                }else if(event.getAction()==MotionEvent.ACTION_MOVE) {
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     tv_detail_attr.setVisibility(View.INVISIBLE);
                     return false;
-                }else {
+                } else {
                     tv_detail_attr.setVisibility(View.VISIBLE);
                     return false;
                 }
             }
         });
+        mMenuPopup = new MenuPopup(getActivity());
+        ll_cinema_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMenuPopup.showPopupWindow(v);
+                setSelect(); //设置筛选刷新数据
+            }
+        });
+    }
+    //设置筛选刷新数据
+    private void setSelect() {
+        mMenuPopup.getTx1().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                citydatasUtil.getData();
+            }
+        });
+        mMenuPopup.getTx2().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              citydatasUtil.getData1();
+            }
+        });
+        mMenuPopup.getTx3().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                citydatasUtil.getData2();
+            }
+        });
+        mMenuPopup.getTx4().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                citydatasUtil.getData3();
+            }
+        });
+        mMenuPopup.getTx5().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                citydatasUtil.getData4();
+            }
+        });
+        mMenuPopup.getTx6().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                citydatasUtil.getData5();
+            }
+        });
+        mMenuPopup.getTx7().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                citydatasUtil.getData6();
+            }
+        });
+        mMenuPopup.getTx8().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                citydatasUtil.getData7();
+            }
+        });
+        mMenuPopup.getTx9().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                citydatasUtil.getData8();
+            }
+        });
+        mMenuPopup.getTx10().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                citydatasUtil.getData9();
+            }
+        });
+
     }
 
     private void setAdapter() {
@@ -110,54 +192,6 @@ public class CinemaFragment extends BaseFragment {
         listviewCinema.setAdapter(adapter);
     }
 
-    private void getDataFromNet() {
-        RequestNet
-                .get()
-                .url(ConstantsUtils.CINIMA_URL, new CallBack() {
-                    @Override
-                    public void onError(Exception e) {
-                        Toast.makeText(getActivity(), "亲,没网了", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onSuccess(String response, int id) {
-                        switch (id) {
-                            case 100:
-                                if (response != null) {
-//                                    rl_loading_common.setVisibility(View.GONE);
-                                    Log.e("TTT", "影院---联网成功--" + response);
-                                    parseJson(response);
-                                }
-                                break;
-                            case 101:
-                                break;
-                        }
-                    }
-                });
-    }
-
-    private void parseJson(String json) {
-        Gson gson = new Gson();
-        cinemaBean = gson.fromJson(json, CinemaBean.class);
-        Log.e("TTT","TTTTTTTTTTT"+ cinemaBean.getData().get昌平区().toString()+"");
-        getData();
-        Log.e("TAG", "itembean====222222222"+datas.get(0).getAddr());
-    }
-
-    private void getData() {
-        datas = new ArrayList<>();
-        datas.clear();
-        for (int i = 0; i < cinemaBean.getData().get昌平区().size(); i++) {
-            String addr = cinemaBean.getData().get昌平区().get(i).getAddr();
-            String area = cinemaBean.getData().get昌平区().get(i).getArea();
-            String nm = cinemaBean.getData().get昌平区().get(i).getNm();
-            boolean isSell = cinemaBean.getData().get昌平区().get(i).isSell();
-            String sellPrice = cinemaBean.getData().get昌平区().get(i).getSellPrice();
-            ItemBean itemBean = new ItemBean(addr, area, nm, isSell, sellPrice);
-            datas.add(itemBean);
-        }
-        adapter.refresh(datas);
-    }
 
     private void setBannerStyle() {
         //（1）设置banner的样式
@@ -177,7 +211,6 @@ public class CinemaFragment extends BaseFragment {
         //（10）banner设置方法全部调用完毕时最后调用
         banner.start();
 
-
     }
 
 
@@ -195,11 +228,12 @@ public class CinemaFragment extends BaseFragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         Log.e(TAG, "onHiddenChanged" + hidden);
-        if(!hidden) {
+        if (!hidden) {
             isFragmentVisible();
         }
     }

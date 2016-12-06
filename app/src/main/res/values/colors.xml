@@ -15,10 +15,19 @@
     <color name="cinema_text_color_dark">#373737</color>
     <color name="color_movietype_bg">#6d99b4</color>
     <!--<color name="title_bg_common">#D43137"</color>-->
+    <!-- popupwindow-->
+    <color name="popup_bg">#8f000000</color>
+    <color name="line_bg">#CDCDCD</color>
+    <color name="comment_popup_bg">#292929</color>
+    <color name="comment_popup_tx_bg">#413f3f</color>
+
+    <color name="click_bg">#c7c7c7</color>
+    <color name="menu_bg">#FFFFFF</color>
+    <color name="menu_click_bg">#aba2a2</color>
 
     <color name="bg_color_1">#ffeeeeee</color>
     <color name="bg_color_2">#ffffffff</color>
-
+    <!-- popupwindow-->
 
     <!--集成城市索引-->
     <color name="color_background">#fff0efed</color>
