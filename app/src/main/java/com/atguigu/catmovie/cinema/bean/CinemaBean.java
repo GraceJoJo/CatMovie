@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.cinema;
+package com.atguigu.catmovie.cinema.bean;
 
 import java.util.List;
 
@@ -2234,6 +2234,34 @@ public class CinemaBean {
             private String sellPrice;
             private String sellmin;
             private String showCount;
+
+            @Override
+            public String toString() {
+                return "昌平区Bean{" +
+                        "addr='" + addr + '\'' +
+                        ", area='" + area + '\'' +
+                        ", brd='" + brd + '\'' +
+                        ", brdId='" + brdId + '\'' +
+                        ", ct='" + ct + '\'' +
+                        ", deal='" + deal + '\'' +
+                        ", dealPrice='" + dealPrice + '\'' +
+                        ", dis='" + dis + '\'' +
+                        ", distance='" + distance + '\'' +
+                        ", follow='" + follow + '\'' +
+                        ", id='" + id + '\'' +
+                        ", imax='" + imax + '\'' +
+                        ", lat=" + lat +
+                        ", lng=" + lng +
+                        ", nm='" + nm + '\'' +
+                        ", poiId='" + poiId + '\'' +
+                        ", preferential='" + preferential + '\'' +
+                        ", referencePrice='" + referencePrice + '\'' +
+                        ", sell=" + sell +
+                        ", sellPrice='" + sellPrice + '\'' +
+                        ", sellmin='" + sellmin + '\'' +
+                        ", showCount='" + showCount + '\'' +
+                        '}';
+            }
 
             public String getAddr() {
                 return addr;

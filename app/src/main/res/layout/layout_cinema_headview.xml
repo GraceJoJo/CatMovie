@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.youth.banner.Banner
+        android:id="@+id/banner_cinema"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"></com.youth.banner.Banner>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp">
+
+        <TextView
+            android:id="@+id/tv_cinema_head_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="登陆后可查看收藏影院"
+            android:textColor="@color/cinema_text_color_light" />
+
+        <TextView
+            android:id="@+id/tv_cinema_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/buy_shape"
+            android:paddingBottom="5dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="3dp"
+            android:text="登录"
+            android:textColor="@color/color_red_light2" />
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_cinema_login"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:background="@color/color_grey_light"/>
+</LinearLayout>

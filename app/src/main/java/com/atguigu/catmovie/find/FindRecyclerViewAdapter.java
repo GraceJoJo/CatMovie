@@ -2,6 +2,7 @@ package com.atguigu.catmovie.find;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -11,7 +12,10 @@ import android.widget.TextView;
 import com.atguigu.catmovie.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -111,8 +115,6 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
             OneImageTextTopHolder oneImageTextTopHolder = (OneImageTextTopHolder) holder;
             oneImageTextTopHolder.setData(mListData, position);
         }
-
-
     }
 
     //
@@ -173,25 +175,42 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
         public void setData(List<ListBean.DataBean.FeedsBean> mListData, int position) {
             position--;
             ListBean.DataBean.FeedsBean feedsBean = mListData.get(position);
-            tvNickname.setText(feedsBean.getUser().getNickName());
-            tvTitle.setText(feedsBean.getTitle());
-            tvCommontCount.setText(feedsBean.getCommentCount());
-            tvViewCount.setText(feedsBean.getViewCount());
-            Picasso.with(mContext).load(feedsBean.getImages().get(0).getUrl()).into(ivImage);
+            try {
+                tvNickname.setText(feedsBean.getUser().getNickName());
+                tvTitle.setText(feedsBean.getTitle());
+                tvCommontCount.setText(feedsBean.getCommentCount());
+                tvViewCount.setText(feedsBean.getViewCount());
 
+            }catch (Exception e){
+
+            }
+            Picasso.with(mContext).load(feedsBean.getImages().get(0).getUrl()).into(ivImage);
             //相关逻辑处理
             long mtime = feedsBean.getTime();//得到服务器的事件
             long systemTime = System.currentTimeMillis();//得到当前系统时间
+            Date serdate = new Date(mtime);
+            Date sdate = new Date(systemTime);
+            DateFormat d = new SimpleDateFormat("yyyy-mm-dd HH：mm:ss SSS毫秒");
+            DateFormat d1 = new SimpleDateFormat("yyyy-mm-dd HH：mm:ss SSS毫秒");
+            String syst = d1.format(sdate);
+            String ser = d.format(serdate);
+            Log.e("TAG", "syst==="+syst);
+            Log.e("TAG", "ser==="+ser);
+
+            Log.e("TAG", "mtime==="+mtime);
+            Log.e("TAG", "systemTime==="+systemTime);
             if (mtime >= systemTime) {
                 tvDate.setText("今天");
+
             } else {
                 tvDate.setText("昨天");
             }
-
         }
     }
 
     private class ThreeImageHolder extends RecyclerView.ViewHolder {
+
+        private TextView tvDate;
         private TextView tvTitle;
         private ImageView ivImage1;
         private ImageView ivImage2;
@@ -199,6 +218,7 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
 
         public ThreeImageHolder(View itemView) {
             super(itemView);
+            tvDate = (TextView) itemView.findViewById(R.id.tv_date);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             ivImage1 = (ImageView) itemView.findViewById(R.id.iv_image1);
             ivImage2 = (ImageView) itemView.findViewById(R.id.iv_image2);
@@ -212,10 +232,18 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
             Picasso.with(mContext).load(feedsBean.getImages().get(0).getUrl()).into(ivImage1);
             Picasso.with(mContext).load(feedsBean.getImages().get(1).getUrl()).into(ivImage2);
             Picasso.with(mContext).load(feedsBean.getImages().get(2).getUrl()).into(ivImage3);
+            long mtime = feedsBean.getTime();//得到服务器的事件
+            long systemTime = System.currentTimeMillis();//得到当前系统时间
+            if (mtime >= systemTime) {
+                tvDate.setText("今天");
+            } else {
+                tvDate.setText("昨天");
+            }
         }
     }
 
     private class ThreeGridImageHolder extends RecyclerView.ViewHolder {
+        private TextView tvDate;
         private TextView tvTitle;
         private ImageView ivImage1;
         private ImageView ivImage2;
@@ -223,6 +251,7 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
 
         public ThreeGridImageHolder(View itemView) {
             super(itemView);
+            tvDate = (TextView) itemView.findViewById(R.id.tv_date);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             ivImage1 = (ImageView) itemView.findViewById(R.id.iv_image1);
             ivImage2 = (ImageView) itemView.findViewById(R.id.iv_image2);
@@ -236,17 +265,28 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
             Picasso.with(mContext).load(feedsBean.getImages().get(0).getUrl()).into(ivImage1);
             Picasso.with(mContext).load(feedsBean.getImages().get(1).getUrl()).into(ivImage2);
             Picasso.with(mContext).load(feedsBean.getImages().get(2).getUrl()).into(ivImage3);
+
+            long mtime = feedsBean.getTime();//得到服务器的事件
+            long systemTime = System.currentTimeMillis();//得到当前系统时间
+            if (mtime >= systemTime) {
+                tvDate.setText("今天");
+            } else {
+                tvDate.setText("昨天");
+            }
         }
     }
 
     private class OneImageTextTopHolder extends RecyclerView.ViewHolder {
+        private TextView tvDate;
        private TextView tvTitle;
        private ImageView ivImage;
 
         public OneImageTextTopHolder(View itemView) {
             super(itemView);
+            tvDate = (TextView) itemView.findViewById(R.id.tv_date);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             ivImage = (ImageView) itemView.findViewById(R.id.iv_image);
+
         }
 
         public void setData(List<ListBean.DataBean.FeedsBean> mListData, int position) {
@@ -254,6 +294,14 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
             ListBean.DataBean.FeedsBean feedsBean = mListData.get(position);
             tvTitle.setText(feedsBean.getTitle());
             Picasso.with(mContext).load(feedsBean.getImages().get(0).getUrl()).into(ivImage);
+
+            long mtime = feedsBean.getTime();//得到服务器的事件
+            long systemTime = System.currentTimeMillis();//得到当前系统时间
+            if (mtime >= systemTime) {
+                tvDate.setText("今天");
+            } else {
+                tvDate.setText("昨天");
+            }
         }
     }
 }

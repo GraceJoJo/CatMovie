@@ -35,14 +35,6 @@ public class ConstantsUtils {
     /**
      * 发现-页面
      */
-//    public static final String FIND_LIST_URL = "http://api.maoyan.com/sns/v5/feed.json?offset=0&limit=10&timestamp=0&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=7601&utm_source=meizu&utm_medium=android&utm_term=7.6.0&utm_content=865479028905735&ci=1&net=255&dModel=MX4&uuid=F02F61DCB963FEAF421EF2B0673996706BABCBA6FA9412580E90681C52CB9B11&lat=40.10073&lng=116.378531&__reqTraceID=3794605830477992064&refer=%2FWelcome&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1480832259196&__skua=32bcf146c756ecefe7535b95816908e3&__skno=d6ffcde9-1bd6-43a1-b7fc-5d1ff82c5263&__skcy=dcyxucdqjeiCUw1w8jrOVpb%2B%2FSg%3D";
-//    private static int i = 0;
-//    private static int page = 0 + 10 * i;
-//    public static  String FIND_LIST_URL = "http://api.maoyan.com/sns/v5/feed.json?offset=" + page + "&limit=10&timestamp=0&utm_campaign=AmovieBmovieCD-1&movieBundleVersion=7601&utm_source=meizu&utm_medium=android&utm_term=7.6.0&utm_content=865479028905735&ci=1&net=255&dModel=MX4&uuid=F02F61DCB963FEAF421EF2B0673996706BABCBA6FA9412580E90681C52CB9B11&lat=40.10073&lng=116.378531&__reqTraceID=3794605830477992064&refer=%2FWelcome&__skck=6a375bce8c66a0dc293860dfa83833ef&__skts=1480832259196&__skua=32bcf146c756ecefe7535b95816908e3&__skno=d6ffcde9-1bd6-43a1-b7fc-5d1ff82c5263&__skcy=dcyxucdqjeiCUw1w8jrOVpb%2B%2FSg%3D";
-//
-//    public void setNum(int num) {
-//        this.i = num;
-//    }
     public static final String FIND_LIST_URL = "http://api.maoyan.com/sns/v5/feed.json?";
 
 

@@ -3,48 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <!--<include layout="@layout/title_common"></include>-->
-    <com.youth.banner.Banner
-        android:id="@+id/banner_cinema"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"></com.youth.banner.Banner>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginBottom="3dp"
-        android:layout_marginTop="3dp">
-
-        <TextView
-            android:id="@+id/tv_cinema_head_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="登陆后可查看收藏影院"
-            android:textColor="@color/cinema_text_color_light" />
-
-        <TextView
-            android:id="@+id/tv_cinema_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/buy_shape"
-            android:paddingBottom="5dp"
-            android:layout_marginBottom="2dp"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:paddingTop="3dp"
-            android:text="登录"
-            android:textColor="@color/color_red_light2"/>
-    </RelativeLayout>
-    <ListView
-        android:id="@+id/listview_cinema"
+    <include layout="@layout/title_cinema"></include>
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+        <ListView
+            android:id="@+id/listview_cinema"
+            android:divider="@null"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+        </ListView>
+        <TextView
+            android:id="@+id/tv_detail_attr"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="北京市昌平区大柳树幼儿园"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:background="#EEEEEE"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:drawableLeft="@drawable/xb"
+            android:drawableRight="@drawable/xc"
+            android:drawablePadding="5dp"
+            />
+    </FrameLayout>
 
-    </ListView>
 </LinearLayout>
