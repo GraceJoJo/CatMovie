@@ -84,9 +84,6 @@ public class CinemaFragment extends BaseFragment {
 
         setBannerStyle();
 
-
-//        getDataFromNet();
-
         setAdapter();
 
         citydatasUtil = new CitydatasUtil(getActivity(), adapter);

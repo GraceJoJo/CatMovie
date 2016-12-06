@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.find;
+package com.atguigu.catmovie.find.bean;
 
 import java.util.List;
 

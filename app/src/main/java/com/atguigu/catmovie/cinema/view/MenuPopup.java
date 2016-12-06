@@ -12,7 +12,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.atguigu.catmovie.R;
-import com.atguigu.catmovie.cinema.base.base.BasePopupWindow;
+import com.atguigu.catmovie.base.BasePopupWindow;
 import com.atguigu.catmovie.utils.DensityUtil;
 
 public class MenuPopup extends BasePopupWindow {

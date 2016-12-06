@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.cinema.base.base;
+package com.atguigu.catmovie.base;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -18,6 +18,7 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.PopupWindow;
 
+import com.atguigu.catmovie.base.BasePopup;
 import com.atguigu.catmovie.cinema.utils.InputMethodUtils;
 
 /**

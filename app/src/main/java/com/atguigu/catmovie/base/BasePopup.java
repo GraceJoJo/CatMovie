@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.cinema.base.base;
+package com.atguigu.catmovie.base;
 
 import android.view.View;
 

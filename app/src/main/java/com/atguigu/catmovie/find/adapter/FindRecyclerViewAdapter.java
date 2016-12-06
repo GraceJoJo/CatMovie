@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.find;
+package com.atguigu.catmovie.find.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.atguigu.catmovie.R;
+import com.atguigu.catmovie.find.bean.HeadBean;
+import com.atguigu.catmovie.find.bean.ListBean;
 import com.atguigu.catmovie.find.activity.FilmFastActivity;
 import com.atguigu.catmovie.find.activity.PiaoFangActivity;
 import com.atguigu.catmovie.find.activity.TopicActivity;

@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.find;
+package com.atguigu.catmovie.find.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.atguigu.catmovie.R;
+import com.atguigu.catmovie.find.bean.HeadBean;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
