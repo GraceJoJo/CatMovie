@@ -52,12 +52,15 @@ public class CinemaFragment extends BaseFragment {
     private ListView popup_listview;
     private List<String> cities;
     private CitydatasUtil citydatasUtil;
+    private int headerHeight;
+    private LinearLayout ll_title;
 
     @Override
     public View initView() {
         View view = View.inflate(mContext, R.layout.fragment_cinema, null);
         ll_cinema_search = (LinearLayout) view.findViewById(R.id.ll_cinema_search);
         ll_cinema_select = (LinearLayout) view.findViewById(R.id.ll_cinema_select);
+        ll_title = (LinearLayout) view.findViewById(R.id.ll_title);
         ButterKnife.bind(this, view);
         View headView = View.inflate(mContext, R.layout.layout_cinema_headview, null);
         TextView tv_cinema_head_text = (TextView) headView.findViewById(R.id.tv_cinema_head_text);
@@ -118,6 +121,40 @@ public class CinemaFragment extends BaseFragment {
                 setSelect(); //设置筛选刷新数据
             }
         });
+//        //监听ListView滑动
+//        listviewCinema.setOnScrollListener(new AbsListView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//
+//            }
+//
+//            @Override
+//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+//                // 判断当前最上面显示的是不是头布局，因为Xlistview有刷新控件，所以头布局的位置是1，即第二个
+//                if (firstVisibleItem == 1) {
+//                    // 获取头布局
+//                    View view1 = listviewCinema.getChildAt(0);
+//                    if (view1 != null) {
+//                        // 获取头布局现在的最上部的位置的相反数
+//                        int top = -view1.getTop();
+//                        // 获取头布局的高度
+//                        headerHeight = view1.getHeight();
+//                        // 满足这个条件的时候，是头布局在XListview的最上面第一个控件的时候，只有这个时候，我们才调整透明度
+//                        if (top <= headerHeight && top >= 0) {
+//                            // 获取当前位置占头布局高度的百分比
+//                            float f = (float) top / (float) headerHeight;
+//                            ll_title.getBackground().setAlpha((int) (f * 255));
+//                            // 通知标题栏刷新显示
+//                            ll_title.invalidate();
+//                        }
+//                    }
+//                } else if (firstVisibleItem > 1) {
+//                    ll_title.getBackground().setAlpha(255);
+//                } else {
+//                    ll_title.getBackground().setAlpha(0);
+//                }
+//            }
+//        });
     }
     //设置筛选刷新数据
     private void setSelect() {
@@ -125,60 +162,90 @@ public class CinemaFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 citydatasUtil.getData();
+                if(mMenuPopup.isShowing()) {
+                    mMenuPopup.dismiss();
+                }
             }
         });
         mMenuPopup.getTx2().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               citydatasUtil.getData1();
+                if(mMenuPopup.isShowing()) {
+                    mMenuPopup.dismiss();
+                }
             }
         });
         mMenuPopup.getTx3().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 citydatasUtil.getData2();
+                if(mMenuPopup.isShowing()) {
+                    mMenuPopup.dismiss();
+                }
             }
         });
         mMenuPopup.getTx4().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 citydatasUtil.getData3();
+                if(mMenuPopup.isShowing()) {
+                    mMenuPopup.dismiss();
+                }
             }
         });
         mMenuPopup.getTx5().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 citydatasUtil.getData4();
+                if(mMenuPopup.isShowing()) {
+                    mMenuPopup.dismiss();
+                }
             }
         });
         mMenuPopup.getTx6().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 citydatasUtil.getData5();
+                if(mMenuPopup.isShowing()) {
+                    mMenuPopup.dismiss();
+                }
             }
         });
         mMenuPopup.getTx7().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 citydatasUtil.getData6();
+                if(mMenuPopup.isShowing()) {
+                    mMenuPopup.dismiss();
+                }
             }
         });
         mMenuPopup.getTx8().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 citydatasUtil.getData7();
+                if(mMenuPopup.isShowing()) {
+                    mMenuPopup.dismiss();
+                }
             }
         });
         mMenuPopup.getTx9().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 citydatasUtil.getData8();
+                if(mMenuPopup.isShowing()) {
+                    mMenuPopup.dismiss();
+                }
             }
         });
         mMenuPopup.getTx10().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 citydatasUtil.getData9();
+                if(mMenuPopup.isShowing()) {
+                    mMenuPopup.dismiss();
+                }
             }
         });
 

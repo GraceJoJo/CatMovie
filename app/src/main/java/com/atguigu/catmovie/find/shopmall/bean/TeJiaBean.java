@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.find.shopmall;
+package com.atguigu.catmovie.find.shopmall.bean;
 
 import java.util.List;
 

@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.atguigu.catmovie.R;
+import com.atguigu.catmovie.find.shopmall.bean.ShopMallList;
+import com.atguigu.catmovie.find.shopmall.bean.TeJiaBean;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;

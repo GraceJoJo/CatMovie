@@ -1,11 +1,11 @@
 package com.atguigu.catmovie.find.shopmall;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,9 +14,13 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.atguigu.catmovie.R;
+import com.atguigu.catmovie.find.shopmall.bean.ImageBean;
+import com.atguigu.catmovie.find.shopmall.bean.ShopMallList;
+import com.atguigu.catmovie.find.shopmall.bean.TeJiaBean;
 import com.atguigu.catmovie.net.CallBack;
 import com.atguigu.catmovie.net.RequestNet;
 import com.atguigu.catmovie.utils.ConstantsUtils;
+import com.atguigu.catmovie.utils.DensityUtil;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -50,58 +54,36 @@ public class MallActivity extends Activity {
         initData();
         initListener();
     }
-
+    private int mDistanceY;
     private void initListener() {
 //        实现思路：
-//
-//        1、先获取顶部图片的高度height，这个有3种方式获取，我用的是监听onGlobalLayout方法的回调
-//
-//        2、监听scrollview的滚动坐标，原生的没有这个监听，需要我们自己写个view继承scrollview，然后重写onScrollChanged()方法，创建一个监听，在这个方法里面回调
-//
-//        3、根据图片高度height和滚动的纵坐标y进行判断，算出比例，透明度范围0~255，根据比例设置改变的透明度，当y>height是不做改变
+//        根据toolbar的高度height和滚动的纵坐标y进行判断，算出比例，透明度范围0~255，根据比例设置改变的透明度，当y>height是不做改变
         recycleview.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-//                int height = 100;
-//                if (dy <= height && dy >= 0) {
-//                    float scale = (float) dy / height;
-//                    float alpha = (255 * scale);
-//                    llTitlebar.setBackgroundColor(Color.parseColor("#D43E37"));
-//                } else if (dy > height) {
-//                    llTitlebar.getBackground().setAlpha(0);
-//                }
-                Log.e("TAG", "dy====="+dy);
+
+                //滑动的距离
+                mDistanceY += dy;
+                //toolbar的高度
+                int toolbarHeight = llTitlebar.getBottom()+ DensityUtil.dip2px(MallActivity.this,80);
+
+                //当滑动的距离 <= toolbar高度的时候，改变Toolbar背景色的透明度，达到渐变的效果
+                if (mDistanceY <= toolbarHeight && mDistanceY >= 0) {
+                    float scale = (float) mDistanceY / toolbarHeight;
+                    float alpha = scale * 255;
+
+                    llTitlebar.setBackgroundColor(Color.argb((int) alpha, 209, 52, 51));
+                } else {
+                    //上述虽然判断了滑动距离与toolbar高度相等的情况，但是实际测试时发现，标题栏的背景色
+                    //很少能达到完全不透明的情况，所以这里又判断了滑动距离大于toolbar高度的情况，
+                    //将标题栏的颜色设置为完全不透明状态
+                    llTitlebar.setBackgroundColor(Color.parseColor("#E04037"));
+                    llTitlebar.setAlpha(1);
+                }
+
             }
         });
-//        // 最重要的方法，标题栏的透明度变化在这个方法实现
-//        @Override
-//        public void onScroll(AbsListView listView, int firstVisibleItem,
-//        int visibleItemCount, int totalItemCount) {
-//            // 判断当前最上面显示的是不是头布局，因为Xlistview有刷新控件，所以头布局的位置是1，即第二个
-//            if (firstVisibleItem == 1) {
-//                // 获取头布局
-//                View view = listView.getChildAt(0);
-//                if (view != null) {
-//                    // 获取头布局现在的最上部的位置的相反数
-//                    int top = -view.getTop();
-//                    // 获取头布局的高度
-//                    headerHeight = view.getHeight();
-//                    // 满足这个条件的时候，是头布局在XListview的最上面第一个控件的时候，只有这个时候，我们才调整透明度
-//                    if (top <= headerHeight && top >= 0) {
-//                        // 获取当前位置占头布局高度的百分比
-//                        float f = (float) top / (float) headerHeight;
-//                        rl_title.getBackground().setAlpha((int) (f * 255));
-//                        // 通知标题栏刷新显示
-//                        rl_title.invalidate();
-//                    }
-//                }
-//            } else if (firstVisibleItem > 1) {
-//                rl_title.getBackground().setAlpha(255);
-//            } else {
-//                rl_title.getBackground().setAlpha(0);
-//            }
-//        }
     }
 
 
