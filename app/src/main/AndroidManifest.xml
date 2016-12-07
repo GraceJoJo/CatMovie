@@ -21,7 +21,18 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- SD卡读取权限，用户写入离线定位数据 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 添加SharedSDK的权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
+    <!-- 添加SharedSDK的权限 -->
     <!-- // 百度服务，必须 -->
     <application
         android:name=".MyApplication"
@@ -64,7 +75,10 @@
             android:name=".find.activity.PiaoFangActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
         <activity android:name=".find.activity.TopicActivity" />
-        <activity android:name=".find.activity.FilmFastActivity"></activity>
+        <activity android:name=".find.activity.FilmFastActivity" />
+
+        <activity
+            android:name=".find.shopmall.MallActivity"></activity>
     </application>
 
 </manifest>

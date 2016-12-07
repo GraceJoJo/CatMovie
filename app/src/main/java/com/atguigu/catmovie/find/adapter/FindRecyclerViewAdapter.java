@@ -17,6 +17,7 @@ import com.atguigu.catmovie.find.bean.ListBean;
 import com.atguigu.catmovie.find.activity.FilmFastActivity;
 import com.atguigu.catmovie.find.activity.PiaoFangActivity;
 import com.atguigu.catmovie.find.activity.TopicActivity;
+import com.atguigu.catmovie.find.shopmall.MallActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -58,7 +59,7 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
         if (position == 0) {
             return HEAD_GRIDVIEW;
         } else {
-            int style = mListData.get(position-1).getStyle();
+            int style = mListData.get(position - 1).getStyle();
             if (style == 2) {
                 return ONE_IMAGE_TEXT_RIGHT;
             } else if (style == 3) {
@@ -110,8 +111,8 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
             HeadGridviewHolder headHridviewHolder = (HeadGridviewHolder) holder;
             headHridviewHolder.setData(headDatas);
         } else if (getItemViewType(position) == ONE_IMAGE_TEXT_RIGHT) {
-                OneImageTextRightHolder oneImageTextRightHolder = (OneImageTextRightHolder) holder;
-                oneImageTextRightHolder.setData(mListData, position);
+            OneImageTextRightHolder oneImageTextRightHolder = (OneImageTextRightHolder) holder;
+            oneImageTextRightHolder.setData(mListData, position);
         } else if (getItemViewType(position) == THREE_IMAGE) {
             ThreeImageHolder threeImageHolder = (ThreeImageHolder) holder;
             threeImageHolder.setData(mListData, position);
@@ -158,20 +159,21 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
             HeadGridViewAdapter headGridViewAdapter = new HeadGridViewAdapter(mContext);
             find_gridview.setAdapter(headGridViewAdapter);
             headGridViewAdapter.refresh(headDatas);
-            
+
             find_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(position==0) {
+                    if (position == 0) {
                         LoadTopicWebView();
-                    }else if(position==1) {
+                    } else if (position == 1) {
                         LoadFilmWebView();
-                    }else if(position==2) {
+                    } else if (position == 2) {
                         /**
                          * 周边商城
                          */
-
-                    }else if(position==3) {
+                        Intent intent = new Intent(mContext, MallActivity.class);
+                        mContext.startActivity(intent);
+                    } else if (position == 3) {
                         LoadWebView();
                     }
                 }
@@ -179,17 +181,17 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
         }
 
         private void LoadFilmWebView() {
-            Intent intent = new Intent(mContext,FilmFastActivity.class);
+            Intent intent = new Intent(mContext, FilmFastActivity.class);
             mContext.startActivity(intent);
         }
 
         private void LoadTopicWebView() {
-            Intent intent = new Intent(mContext,TopicActivity.class);
+            Intent intent = new Intent(mContext, TopicActivity.class);
             mContext.startActivity(intent);
         }
 
         private void LoadWebView() {
-            Intent intent = new Intent(mContext,PiaoFangActivity.class);
+            Intent intent = new Intent(mContext, PiaoFangActivity.class);
             mContext.startActivity(intent);
         }
     }
@@ -221,7 +223,7 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
                 tvCommontCount.setText(feedsBean.getCommentCount());
                 tvViewCount.setText(feedsBean.getViewCount());
 
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
             Picasso.with(mContext).load(feedsBean.getImages().get(0).getUrl()).into(ivImage);
@@ -234,11 +236,11 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
             DateFormat d1 = new SimpleDateFormat("yyyy-mm-dd HH：mm:ss SSS毫秒");
             String syst = d1.format(sdate);
             String ser = d.format(serdate);
-            Log.e("TAG", "syst==="+syst);
-            Log.e("TAG", "ser==="+ser);
+            Log.e("TAG", "syst===" + syst);
+            Log.e("TAG", "ser===" + ser);
 
-            Log.e("TAG", "mtime==="+mtime);
-            Log.e("TAG", "systemTime==="+systemTime);
+            Log.e("TAG", "mtime===" + mtime);
+            Log.e("TAG", "systemTime===" + systemTime);
             if (mtime >= systemTime) {
                 tvDate.setText("今天");
 
@@ -318,8 +320,8 @@ public class FindRecyclerViewAdapter extends RecyclerView.Adapter {
 
     private class OneImageTextTopHolder extends RecyclerView.ViewHolder {
         private TextView tvDate;
-       private TextView tvTitle;
-       private ImageView ivImage;
+        private TextView tvTitle;
+        private ImageView ivImage;
 
         public OneImageTextTopHolder(View itemView) {
             super(itemView);
