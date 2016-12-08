@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseFragment;
@@ -25,8 +26,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.RegisterPage;
 
 /**
  * 登陆页面----账号密码登陆
@@ -79,6 +85,7 @@ public class LoginByPwFragment extends BaseFragment implements View.OnClickListe
 
     private void initListener() {
         ivQq.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
     }
 
 
@@ -95,8 +102,35 @@ public class LoginByPwFragment extends BaseFragment implements View.OnClickListe
                 //qq第三方登陆
                 mTencent.login(LoginByPwFragment.this, "all", loginListener);
                 break;
+            case R.id.btn_login:
+                phoneCheck();
+                break;
         }
     }
+    /**
+     * 集成手机验证码登陆
+     */
+    public void phoneCheck(){
+//打开注册页面
+        RegisterPage registerPage = new RegisterPage();
+        registerPage.setRegisterCallback(new EventHandler() {
+            public void afterEvent(int event, int result, Object data) {
+// 解析注册结果
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    @SuppressWarnings("unchecked")
+                    HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
+                    String country = (String) phoneMap.get("country");
+                    String phone = (String) phoneMap.get("phone");
+                    Toast.makeText(getActivity(), "phone" + phone, Toast.LENGTH_SHORT).show();
+
+// 提交用户信息（此方法可以不调用）
+//                    registerUser(country, phone);
+                }
+            }
+        });
+        registerPage.show(getActivity());
+    }
+
     /**
      *     集成第三方登陆
      */
