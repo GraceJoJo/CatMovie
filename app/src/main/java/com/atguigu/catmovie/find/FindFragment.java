@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.fragment;
+package com.atguigu.catmovie.find;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;

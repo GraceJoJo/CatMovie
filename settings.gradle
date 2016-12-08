@@ -1,1 +1,1 @@
-include ':app', ':ViewPagerIndicator_library', ':FlycoTabLayout_Lib', ':okhttputils', ':MaterialRefreshLayout_library', ':pinyinSearch'
+include ':app', ':ViewPagerIndicator_library', ':FlycoTabLayout_Lib', ':okhttputils', ':MaterialRefreshLayout_library', ':pinyinSearch', ':imagepicker'

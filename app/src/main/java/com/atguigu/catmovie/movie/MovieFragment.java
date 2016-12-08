@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.fragment;
+package com.atguigu.catmovie.movie;
 
 import android.content.Context;
 import android.os.Bundle;

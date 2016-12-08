@@ -1,4 +1,4 @@
-package com.atguigu.catmovie.fragment;
+package com.atguigu.catmovie.cinema;
 
 import android.content.Context;
 import android.support.v4.content.LocalBroadcastManager;

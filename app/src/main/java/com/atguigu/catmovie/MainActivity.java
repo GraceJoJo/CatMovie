@@ -22,10 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atguigu.catmovie.cityindex.citylist.CityList;
-import com.atguigu.catmovie.fragment.CinemaFragment;
-import com.atguigu.catmovie.fragment.FindFragment;
-import com.atguigu.catmovie.fragment.MeFragment;
-import com.atguigu.catmovie.fragment.MovieFragment;
+import com.atguigu.catmovie.cinema.CinemaFragment;
+import com.atguigu.catmovie.find.FindFragment;
+import com.atguigu.catmovie.login.MeFragment;
+import com.atguigu.catmovie.movie.MovieFragment;
 import com.atguigu.catmovie.utils.SpUtil;
 import com.flyco.tablayout.SlidingTabLayout;
 
