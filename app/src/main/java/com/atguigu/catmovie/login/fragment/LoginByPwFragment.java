@@ -18,6 +18,9 @@ import com.atguigu.catmovie.base.BaseFragment;
 import com.atguigu.catmovie.login.MyConstants;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.common.Constants;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -86,6 +89,7 @@ public class LoginByPwFragment extends BaseFragment implements View.OnClickListe
     private void initListener() {
         ivQq.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
+        ivWeixin.setOnClickListener(this);
     }
 
 
@@ -103,9 +107,39 @@ public class LoginByPwFragment extends BaseFragment implements View.OnClickListe
                 mTencent.login(LoginByPwFragment.this, "all", loginListener);
                 break;
             case R.id.btn_login:
+                //手机验证登录
                 phoneCheck();
                 break;
+            case R.id.iv_weixin:
+                //微信第三方登录
+                WXLogin();
+                Toast.makeText(getActivity(), "微信登录", Toast.LENGTH_SHORT).show();
+                break;
         }
+    }
+    // 微信登录
+    private IWXAPI api;
+    private String WX_APP_ID = "wx19424d3a9c8ee316";
+    /**
+     * 登录微信
+     */
+    private void WXLogin() {
+        //api注册
+        api = WXAPIFactory.createWXAPI(getActivity(),WX_APP_ID, true);
+        api.registerApp(WX_APP_ID);
+
+        SendAuth.Req req = new SendAuth.Req();
+
+        //授权读取用户信息
+//        req.scope = "snsapi_userinfo";
+        req.scope = "snsapi_base";
+
+        //自定义信息
+        req.state = "wechat_sdk_demo_test";
+
+        //向微信发送请求
+        api.sendReq(req);
+
     }
     /**
      * 集成手机验证码登陆
