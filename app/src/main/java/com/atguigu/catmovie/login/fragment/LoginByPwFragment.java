@@ -1,21 +1,29 @@
 package com.atguigu.catmovie.login.fragment;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atguigu.catmovie.R;
 import com.atguigu.catmovie.base.BaseFragment;
 import com.atguigu.catmovie.login.MyConstants;
+import com.atguigu.catmovie.utils.DensityUtil;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.common.Constants;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
@@ -33,6 +41,7 @@ import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import cn.smssdk.gui.RegisterPage;
@@ -62,11 +71,19 @@ public class LoginByPwFragment extends BaseFragment implements View.OnClickListe
     ImageView ivWeixin;
     @Bind(R.id.iv_qq)
     ImageView ivQq;
-    @Bind(R.id.iv_baidu)
-    ImageView ivBaidu;
-    @Bind(R.id.rl_san_fang_login)
-    RelativeLayout rlSanFangLogin;
     //第三方qq登陆
+    @Bind(R.id.fl_arrow)
+    FrameLayout flArrow;
+    @Bind(R.id.fl_xinlang)
+    FrameLayout flXinlang;
+    @Bind(R.id.fl_weichat)
+    FrameLayout flWeichat;
+    @Bind(R.id.fl_qq)
+    FrameLayout flQq;
+    @Bind(R.id.fl_baidu)
+    FrameLayout flBaidu;
+    @Bind(R.id.ll_sanfang_denglu)
+    LinearLayout llSanfangDenglu;
     private static Tencent mTencent;
     private UserInfo mInfo;
 
@@ -77,7 +94,32 @@ public class LoginByPwFragment extends BaseFragment implements View.OnClickListe
 
         return view;
     }
+    private boolean isHide = false;
 
+    /**
+     * 属性动画
+     * @param view
+     */
+    @OnClick(R.id.fl_arrow)
+    void hideSanfang(View view){
+        isHide=!isHide;
+        ObjectAnimator animator1;
+        ObjectAnimator animator2;
+        //第一个参数为 view对象，第二个参数为 动画改变的类型，第三，第四个参数依次是开始透明度和结束透明度
+        if(isHide) {
+            //开始动画，隐藏三方登录按钮
+            animator1 = ObjectAnimator.ofFloat(flArrow,"rotation",0f,180f);//旋转动画
+            animator2=ObjectAnimator.ofFloat(llSanfangDenglu,"translationY",0, DensityUtil.dip2px(DensityUtil.dip2px(getActivity(), 30)));//平移动画
+        }else{
+            animator1 = ObjectAnimator.ofFloat(flArrow,"rotation",180f,360f);
+            animator2=ObjectAnimator.ofFloat(llSanfangDenglu,"translationY", DensityUtil.dip2px(getActivity(), 30),0);
+        }
+        AnimatorSet animatorSet = new AnimatorSet();//组合动画
+        animatorSet.setDuration(400);
+        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
+        animatorSet.play(animator1).with(animator2);//两个动画同时开始play...with...with....
+        animatorSet.start();
+    }
     @Override
     public void initData() {
         mTencent = Tencent.createInstance("1105704769", getActivity());
@@ -117,15 +159,17 @@ public class LoginByPwFragment extends BaseFragment implements View.OnClickListe
                 break;
         }
     }
+
     // 微信登录
     private IWXAPI api;
     private String WX_APP_ID = "wx19424d3a9c8ee316";
+
     /**
      * 登录微信
      */
     private void WXLogin() {
         //api注册
-        api = WXAPIFactory.createWXAPI(getActivity(),WX_APP_ID, true);
+        api = WXAPIFactory.createWXAPI(getActivity(), WX_APP_ID, true);
         api.registerApp(WX_APP_ID);
 
         SendAuth.Req req = new SendAuth.Req();
@@ -141,10 +185,11 @@ public class LoginByPwFragment extends BaseFragment implements View.OnClickListe
         api.sendReq(req);
 
     }
+
     /**
      * 集成手机验证码登陆
      */
-    public void phoneCheck(){
+    public void phoneCheck() {
 //打开注册页面
         RegisterPage registerPage = new RegisterPage();
         registerPage.setRegisterCallback(new EventHandler() {
@@ -166,7 +211,7 @@ public class LoginByPwFragment extends BaseFragment implements View.OnClickListe
     }
 
     /**
-     *     集成第三方登陆
+     * 集成第三方登陆
      */
 
     private String imgurl;
@@ -266,6 +311,14 @@ public class LoginByPwFragment extends BaseFragment implements View.OnClickListe
         } else {
 
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     private class BaseUiListener implements IUiListener {
